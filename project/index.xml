@@ -5,12 +5,20 @@
     <link>https://alt-js.github.io/project/</link>
       <atom:link href="https://alt-js.github.io/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 27 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 27 Oct 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png</url>
       <title>Projects</title>
       <link>https://alt-js.github.io/project/</link>
     </image>
+    
+    <item>
+      <title>A light-weight self-accomodate fire detection system</title>
+      <link>https://alt-js.github.io/project/mobilenetv3/</link>
+      <pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/project/mobilenetv3/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>A fire detection system for car parks</title>
