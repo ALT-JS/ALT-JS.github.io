@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Publication_types | </title>
-    <link>https://ALT-JS.github.io/publication_types/</link>
-      <atom:link href="https://ALT-JS.github.io/publication_types/index.xml" rel="self" type="application/rss+xml" />
+    <title>Publication_types | JiashenDu Homepage</title>
+    <link>https://alt-js.github.io/publication_types/</link>
+      <atom:link href="https://alt-js.github.io/publication_types/index.xml" rel="self" type="application/rss+xml" />
     <description>Publication_types</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 18 Nov 2023 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://ALT-JS.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <url>https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png</url>
       <title>Publication_types</title>
-      <link>https://ALT-JS.github.io/publication_types/</link>
+      <link>https://alt-js.github.io/publication_types/</link>
     </image>
     
   </channel>

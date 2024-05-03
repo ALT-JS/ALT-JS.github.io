@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>paper-conference | Academic</title>
-    <link>https://ALT-JS.github.io/publication-type/paper-conference/</link>
-      <atom:link href="https://ALT-JS.github.io/publication-type/paper-conference/index.xml" rel="self" type="application/rss+xml" />
+    <title>paper-conference | JiashenDu Homepage</title>
+    <link>https://alt-js.github.io/publication-type/paper-conference/</link>
+      <atom:link href="https://alt-js.github.io/publication-type/paper-conference/index.xml" rel="self" type="application/rss+xml" />
     <description>paper-conference</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 01 Jul 2013 00:00:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 18 Nov 2023 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://ALT-JS.github.io/media/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
+      <url>https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png</url>
       <title>paper-conference</title>
-      <link>https://ALT-JS.github.io/publication-type/paper-conference/</link>
+      <link>https://alt-js.github.io/publication-type/paper-conference/</link>
     </image>
     
     <item>
-      <title>An example conference paper</title>
-      <link>https://ALT-JS.github.io/publication/conference-paper/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
-      <guid>https://ALT-JS.github.io/publication/conference-paper/</guid>
+      <title>I’M HOI: Inertia-aware Monocular Capture of 3D Human-Object Interactions</title>
+      <link>https://alt-js.github.io/publication/conference-paper/imhoi/</link>
+      <pubDate>Sat, 18 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/publication/conference-paper/imhoi/</guid>
       <description>&lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click the &lt;em&gt;Cite&lt;/em&gt; button above to demo the feature to enable visitors to import publication metadata into their reference management software.

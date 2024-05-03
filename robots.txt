@@ -1,3 +1,3 @@
 User-agent: *
 
-Sitemap: https://ALT-JS.github.io/sitemap.xml
+Sitemap: https://alt-js.github.io/sitemap.xml
