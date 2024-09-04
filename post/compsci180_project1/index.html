@@ -1,0 +1,2641 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: September 3, 2024 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.7" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.f6689966c0a10712f95f034011917db0.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Jiashen Du" />
+
+
+
+
+
+  
+
+<meta name="description" content="Part1: Background &amp; Overview The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://alt-js.github.io/post/compsci180_project1/" />
+<link rel="canonical" href="https://alt-js.github.io/post/compsci180_project1/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary_large_image" />
+
+  <meta property="twitter:site" content="@GetResearchDev" />
+  <meta property="twitter:creator" content="@GetResearchDev" />
+<meta property="twitter:image" content="https://alt-js.github.io/post/compsci180_project1/featured.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="JiashenDu Homepage" />
+<meta property="og:url" content="https://alt-js.github.io/post/compsci180_project1/" />
+<meta property="og:title" content="COMPSCI 180 Project1 | JiashenDu Homepage" />
+<meta property="og:description" content="Part1: Background &amp; Overview The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible." /><meta property="og:image" content="https://alt-js.github.io/post/compsci180_project1/featured.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2024-09-03T00:00:00&#43;00:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2024-09-03T00:00:00&#43;00:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://alt-js.github.io/post/compsci180_project1/"
+  },
+  "headline": "COMPSCI 180 Project1",
+  
+  "image": [
+    "https://alt-js.github.io/post/compsci180_project1/featured.png"
+  ],
+  
+  "datePublished": "2024-09-03T00:00:00Z",
+  "dateModified": "2024-09-03T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Jiashen Du"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "JiashenDu Homepage",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "Part1: Background \u0026amp; Overview The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>COMPSCI 180 Project1 | JiashenDu Homepage</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="a714bd86c09a4214ac649050c3f7bd09" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">JiashenDu Homepage</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">JiashenDu Homepage</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://twitter.com/altjasonspeed" data-toggle="tooltip" data-placement="bottom" title="Follow me on Twitter" target="_blank" rel="noopener" aria-label="Follow me on Twitter">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+<div class="article-container pt-3">
+  <h1>COMPSCI 180 Project1</h1>
+
+  
+  <p class="page-subtitle">Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Sep 3, 2024
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 333px;">
+  <div style="position: relative">
+    <img src="/post/compsci180_project1/featured_hu7ec083aeaafecc53e9d9171940783de9_206075_293c19bdc251ffaaf371ca6f3706295d.webp" width="720" height="333" alt="" class="featured-image">
+    <span class="article-header-caption">Left: Canny &amp; ImagePyramid tuned. Right: stacked without alignment.</span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="part1-background--overview">Part1: Background &amp; Overview</h2>
+<p>The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible. First, I cropped the pictures into three parts, and treat them as blue channel, green channel and red channel. Then, the vanilla method is just to stack the three channels together, as shown below.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/6ByAnf7ZY3d2gV4.jpg" alt="12color_image.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<p style="text-align: center;"><em>Picture Selected: Cathedral</em></p>
+<p>The easiest attempt clearly has two drawbacks.
+One is that the three channels of pictures don&rsquo;t crop quite well, resulting in the huge colored bands on the edge of the stacked picture.
+The other is that the three channels of pictures don&rsquo;t align quite well, resulting in the blur and gleming of the stacked picture.</p>
+<h2 id="part2-simple-image-alignment">Part2: Simple Image Alignment</h2>
+<p>The easiest way to align the parts is to exhaustively search over a window of possible displacements (say [-15,15] pixels), score each one using some image matching metric, and take the displacement with the best score. I choose the easier way of calculating L2 norm:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># L2_norm calculation</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">L2_norm</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="n">image2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">image1</span> <span class="o">-</span> <span class="n">image2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+</span></span></code></pre></div><p>Using dual for loop, the simple attempt can exhaustively search over a window of possible displacements, compare L2 norm values 256 times, and apply the displacement with the smallest L2 norm, indicating the best alignment. With the simple alignment method, I am able to reconstruct low-res pictures like the cathedral well. <strong>The &ldquo;Best matching displacement(Using blue channel as base image)&rdquo; applies to all results shown below.</strong></p>
+<p><em>For green channel: move -1 on x-axis, move 1 on y-axis.</em></p>
+<p><em>For red channel: move -1 on x-axis, move 7 on y-axis.</em></p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/04/6ByAnf7ZY3d2gV4.jpg" alt="Stacked w/o simple alignment" width="400"><br>
+      <em>Stacked w/o simple alignment</em>
+    </td>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/04/FPh2fRt3nWvjaAc.jpg" alt="Stacked w/ simple alignment" width="400"><br>
+      <em>Stacked w/ simple alignment</em>
+    </td>
+  </tr>
+</table>
+<p>Also, I noticed that the picture has black edges that only bear unnecessary informations and can cause poor results in the simple alignment method. So I revised the simple alignment method by adding one more step of cropping the black edges. With the preprocessing cropping used, the simple alignment algorithm can achieve fine results on other low-res pictures like the monastery and the tobolsk.</p>
+<p><em>For green channel: move 2 on x-axis, move -3 on y-axis.</em></p>
+<p><em>For red channel: move 2 on x-axis, move 3 on y-axis.</em></p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/04/B8fsCXc61GmOx2k.jpg" alt="Stacked w/o simple alignment" width="400"><br>
+      <em>Stacked w/ cropping w/o simple alignment</em>
+    </td>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/04/zghJ3mGdqcIenr5.jpg" alt="Stacked w/ simple alignment" width="400"><br>
+      <em>Stacked w/ simple alignment</em>
+    </td>
+  </tr>
+</table>
+<p><em>For green channel: move 2 on x-axis, move 3 on y-axis.</em></p>
+<p><em>For red channel: move 3 on x-axis, move 6 on y-axis.</em></p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/04/v1O5ZT8dEYtDAFy.jpg" alt="Stacked w/o simple alignment" width="400"><br>
+      <em>Stacked w/ cropping w/o simple alignment</em>
+    </td>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/04/YNiUTPA69DmcLu2.jpg" alt="Stacked w/ simple alignment" width="400"><br>
+      <em>Stacked w/ simple alignment</em>
+    </td>
+  </tr>
+</table>
+<h2 id="part3-image-alignment-using-image-pyramid">Part3: Image alignment using image pyramid</h2>
+<p>Exhaustive search will become prohibitively expensive if the pixel displacement is too large (which will be the case for high-resolution glass plate scans). In this case, we can implement a faster search procedure such as an image pyramid. An image pyramid represents the image at multiple scales (usually scaled by a factor of 2) and the processing is done sequentially starting from the coarsest scale (smallest image) and going down the pyramid, updating your estimate as you go. It is very easy to implement by adding recursive calls to your original single-scale implementation.</p>
+<p>My recursive part of the image pyramid consists of two major parts: when level reaches zero, it will call the original simple alignment function, otherwise, it will resize the images to half of its width and height and recursively call itself. In each call we can get a coarse displacement, accompanied by the fined displacement result derived at its level, we will get a correct result at the final output. Using the image pyramid, I am able to get nice results of icon and harvesters.</p>
+<p><strong>You can click on the image to see a bigger picture for hi-res results.</strong></p>
+<p><em>For green channel: move 17 on x-axis, move 40 on y-axis.</em></p>
+<p><em>For red channel: move 23 on x-axis, move 89 on y-axis.</em></p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/UcoevqmXN1Ay3Tk.jpg" alt="3cropped_color_image_harvesters.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/LsNMZjSBHqYfCiF.jpg" alt="3aligned_color_image_pyramid_harvesters.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p><em>For green channel: move 15 on x-axis, move 58 on y-axis.</em></p>
+<p><em>For red channel: move 13 on x-axis, move 120 on y-axis.</em></p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/bfrcSv8QowgZaF6.jpg" alt="3cropped_color_image_harvesters.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/WcBdltGabp3EP8w.jpg" alt="3aligned_color_image_pyramid_harvesters.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p>I thought the image pyramid alignment performs not that bad until I get the result of Emir:</p>
+<p><em>For green channel: move 24 on x-axis, move 49 on y-axis.</em></p>
+<p><em>For red channel: move 32 on x-axis, move 0 on y-axis.</em></p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/KzjCstLyPvE43JS.jpg" alt="34cropped_color_image_emir.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/Ej1PRmh3LIYFnWM.jpg" alt="34aligned_color_image_pyramid_emir.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p>After checking the original channel-splitted picture of emir, I discovered that the exposure and the brightness level of three channels vary dramatically, which can lead to a bad result demonstrated above.</p>
+<p>How to solve it?</p>
+<h2 id="part4-bells--whistles-a-try-on-canny">Part4: Bells &amp; Whistles: a try on canny</h2>
+<p>After examining the emir&rsquo;s picture, I discovered that Emir&rsquo;s burka bears lots of stripes and treads on it. And the stripes are so clear and sharp that under uneven exposure and brightness level they can be distinguished easily. So edge detection techique may achieve unbelievably good results.</p>
+<p>After channel-split, I ran canny edge detection on three pictures and get the following result:</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/76JB1yWpO9vMxgN.jpg" alt="emir canny b" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/aepMOS3NwnoFjzd.jpg" alt="emir canny g" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/lWck5DOEBaVdjs6.jpg" alt="emir canny r" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Emir canny blue channel</td>
+<td>Emir canny green channel</td>
+<td>Emir canny red channel</td>
+</tr>
+</tbody>
+</table>
+<p>By feeding canny-processed pictures into the previous image pyramid algorithm, Emir&rsquo;s color image is sharp and the skin tone is also right. The left is Alignment result only using image pyramid, the right is Alignment result using canny.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/Ej1PRmh3LIYFnWM.jpg" alt="34aligned_color_image_pyramid_emir.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/t1dcLirhVN4opG2.jpg" alt="canny_aligned_color_image_emir.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: emir</em></p>
+<p>Best matching displacement for emir.tif (Using blue channel as base image):
+For green channel: move 24 on x-axis, move 49 on y-axis.
+For red channel: move 40 on x-axis, move 107 on y-axis.</p>
+<h5 id="more-results-using-canny-processed-image-pyramid">More results using canny-processed image pyramid:</h5>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/zjBVpUH268Ekq3o.jpg" alt="canny_image_lady_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/KxdDG762WUE1AkP.jpg" alt="canny_image_lady_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/USnFCfIWucBoTmE.jpg" alt="canny_image_lady_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lady canny blue channel</td>
+<td>lady canny green channel</td>
+<td>lady canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/Fbqp7j3ovhcnUwP.jpg" alt="cropped_color_image_lady.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/lXQ9H3KWprwZRO6.jpg" alt="canny_aligned_color_image_lady.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: lady</em></p>
+<p>Best matching displacement for lady.tif (Using blue channel as base image):
+For green channel: move 10 on x-axis, move 56 on y-axis.
+For red channel: move 13 on x-axis, move 120 on y-axis.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/MRukiF4olt2BDKQ.jpg" alt="canny_image_onion_church_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/syezjQ1pwISg3Z7.jpg" alt="canny_image_onion_church_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/zKM4GXlkSqsZyPN.jpg" alt="canny_image_onion_church_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onion church canny blue channel</td>
+<td>onion church canny green channel</td>
+<td>onion church canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/JnMG4Roc7zguiUX.jpg" alt="cropped_color_image_onion_church.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/Urdn6zPO5EeIi2R.jpg" alt="canny_aligned_color_image_onion_church.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: onion church</em></p>
+<p>Best matching displacement for onion_church.tif (Using blue channel as base image):
+For green channel: move 24 on x-axis, move 52 on y-axis.
+For red channel: move 35 on x-axis, move 107 on y-axis.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/e2uJh97zpDCgKZq.jpg" alt="canny_image_melons_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/Jziqr4STZwxteKd.jpg" alt="canny_image_melons_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/D2nIwH5kCLlmWxs.jpg" alt="canny_image_melons_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>melons canny blue channel</td>
+<td>melons canny green channel</td>
+<td>melons canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/MNBt5mgJLjZs238.jpg" alt="cropped_color_image_melons.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/8uahEeo2DB3KxJG.jpg" alt="canny_aligned_color_image_melons.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: melons</em></p>
+<p>Best matching displacement for melons.tif (Using blue channel as base image):
+For green channel: move 10 on x-axis, move 80 on y-axis.
+For red channel: move 14 on x-axis, move 176 on y-axis.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/h8pmArenc6KsaXu.jpg" alt="canny_image_sculpture_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/tNgc2XWILRUJBQo.jpg" alt="canny_image_sculpture_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/yDm51TLhgfzuNji.jpg" alt="canny_image_sculpture_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sculpture canny blue channel</td>
+<td>sculpture canny green channel</td>
+<td>sculpture canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/XoflpA3e5nxk8VH.jpg" alt="cropped_color_image_sculpture.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/cmjna6tr958sGyD.jpg" alt="canny_aligned_color_image_sculpture.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: sculpture</em></p>
+<p>Best matching displacement for sculpture.tif (Using blue channel as base image):
+For green channel: move -11 on x-axis, move 33 on y-axis.
+For red channel: move -27 on x-axis, move 140 on y-axis.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/lw4uhdBqOsUaCio.jpg" alt="canny_image_three_generations_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/emArC6vjUM5sbK1.jpg" alt="canny_image_three_generations_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/xcyl3Ieonf7uFLP.jpg" alt="canny_image_three_generations_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>three generations canny blue channel</td>
+<td>three generations canny green channel</td>
+<td>three generations canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/2lDi1Y9WSwhTBu6.jpg" alt="cropped_color_image_three_generations.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/lpZMXiWe3koVhBc.jpg" alt="canny_aligned_color_image_three_generations.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: three generations</em></p>
+<p>Best matching displacement for three_generations.tif (Using blue channel as base image):
+For green channel: move 12 on x-axis, move 55 on y-axis.
+For red channel: move 8 on x-axis, move 111 on y-axis.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/vs97olRMkLpwUPK.jpg" alt="canny_image_self_portrait_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/hkmz8fLysEYIRMb.jpg" alt="canny_image_self_portrait_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/Hbpv4fLQzl298md.jpg" alt="canny_image_self_portrait_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self portrait canny blue channel</td>
+<td>self portrait canny green channel</td>
+<td>self portrait canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/qyeD3P9a74irQgK.jpg" alt="cropped_color_image_self_portrait.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/kVlKI56qOjgyoFY.jpg" alt="canny_aligned_color_image_self_portrait.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: self portrait</em></p>
+<p>Best matching displacement for self_portrait.tif (Using blue channel as base image):
+For green channel: move 29 on x-axis, move 77 on y-axis.
+For red channel: move 37 on x-axis, move 175 on y-axis.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/AIaptbDWicO4TUr.jpg" alt="canny_image_train_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/325RqSIB97CrJte.jpg" alt="canny_image_train_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/17FojSVlYbdmGyD.jpg" alt="canny_image_train_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>train canny blue channel</td>
+<td>train canny green channel</td>
+<td>train canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/3BrUogubDRKxIf4.jpg" alt="cropped_color_image_train.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/04/NzWx1HmY4oPjJ9h.jpg" alt="canny_aligned_color_image_train.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: train</em></p>
+<p>Best matching displacement for train.tif (Using blue channel as base image):
+For green channel: move 0 on x-axis, move 41 on y-axis.
+For red channel: move 29 on x-axis, move 85 on y-axis.</p>
+<h2 id="part5-my-debugging-journey">Part5: My debugging journey</h2>
+<p>Although it&rsquo;s nothing important or difficult, I got a bad result on image pyramid implementation due to the false understanding of <code>np.roll</code> at first. It was not until I viewed the previous post when I realized that it wasn&rsquo;t the pictures that are hard to align, it was my function wrong. My Bells&amp;Whistles is originally an attempt to rotate the picture to achieve alignment. But obviously, if the base method is wrong, there&rsquo;s no way for this attempt to be right.</p>
+<p>The way <code>np.roll</code> handles image translation is to move the section out of the border to the gap created at the other side. So if the original image has black edges on both left and the right side, rolling left means the black edge on the left transferred to the right of the original right black edge, which doesn&rsquo;t contribute to reducing the L2 norm and therefore pictures won&rsquo;t match in the end. In short, counteract the effect of <code>np.roll</code> in the recursion bit of the function, which will help reducing the L2 norm dramatically, and keep the effect of <code>np.roll</code> at the last level of the pixel calculation.</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Falt-js.github.io%2Fpost%2Fcompsci180_project1%2F&amp;text=COMPSCI&#43;180&#43;Project1" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Falt-js.github.io%2Fpost%2Fcompsci180_project1%2F&amp;t=COMPSCI&#43;180&#43;Project1" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=COMPSCI%20180%20Project1&amp;body=https%3A%2F%2Falt-js.github.io%2Fpost%2Fcompsci180_project1%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Falt-js.github.io%2Fpost%2Fcompsci180_project1%2F&amp;title=COMPSCI&#43;180&#43;Project1" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=COMPSCI&#43;180&#43;Project1%20https%3A%2F%2Falt-js.github.io%2Fpost%2Fcompsci180_project1%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Falt-js.github.io%2Fpost%2Fcompsci180_project1%2F&amp;title=COMPSCI&#43;180&#43;Project1" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://alt-js.github.io/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu85b2d0173a5493a6c7ab40679450830b_353166_270x270_fill_q75_lanczos_center.jpg" alt="Jiashen Du"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://alt-js.github.io/">Jiashen Du</a></h5>
+      <h6 class="card-subtitle">Undergrad Student major in CS</h6>
+      <p class="card-text">My research interests include Artificial Intelligence, Deep Learning, Computer Vision and LLMs.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/altjasonspeed" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/ALT-JS" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2024 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.caa0dacbea0f9b8c446bff7a0438f4c8.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9137013a66774049159934c29c3f0205.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
