@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS180 Project1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            text-align: center;
+            padding: 10px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>COMPSCI 180 Project1</h1>
+    <p>Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection.</p>
+
+    <div class="project">
+        <h2>Part1: Background & Overview</h2>
+        <p>The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible. First, I cropped the pictures into three parts, and treat them as blue channel, green channel and red channel.
+            Then, the vanilla method is just to stack the three channels together, as shown below. </p>
+        <div class="image-grid">
+            <a href="https://sm.ms/image/6ByAnf7ZY3d2gV4" target="_blank"><img src="https://s2.loli.net/2024/09/04/6ByAnf7ZY3d2gV4.jpg" ></a>
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>Subproject 2: Model Development</h2>
+        <p>This part involves developing predictive models using machine learning techniques.</p>
+        <div class="image-grid">
+            <img src="image3.jpg" alt="Model Architecture">
+            <img src="image4.jpg" alt="Model Performance">
+        </div>
+    </div>
+
+    <table>
+      <tr>
+        <td><img src="https://s2.loli.net/2024/09/04/76JB1yWpO9vMxgN.jpg" alt="emir canny b"><br>Emir canny blue channel</td>
+        <td><img src="https://s2.loli.net/2024/09/04/aepMOS3NwnoFjzd.jpg" alt="emir canny g"><br>Emir canny green channel</td>
+        <td><img src="https://s2.loli.net/2024/09/04/lWck5DOEBaVdjs6.jpg" alt="emir canny r"><br>Emir canny red channel</td>
+      </tr>
+    </table>
+    
+    <table>
+      <tr>
+        <td><img src="https://s2.loli.net/2024/09/04/KzjCstLyPvE43JS.jpg" alt="34cropped_color_image_emir.jpg"><br>Preprocessed/Cropped</td>
+        <td><img src="https://s2.loli.net/2024/09/04/Ej1PRmh3LIYFnWM.jpg" alt="34aligned_color_image_pyramid_emir.jpg"><br>Alignment result only using image pyramid</td>
+        <td><img src="https://s2.loli.net/2024/09/04/t1dcLirhVN4opG2.jpg" alt="canny_aligned_color_image_emir.jpg"><br>Alignment result using canny</td>
+      </tr>
+    </table>
+
+    
+</body>
+</html>
+
