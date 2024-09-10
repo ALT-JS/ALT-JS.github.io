@@ -1299,6 +1299,150 @@ For red channel: move 37 on x-axis, move 175 on y-axis.&lt;/p&gt;
 &lt;p&gt;Best matching displacement for train.tif (Using blue channel as base image):
 For green channel: move 0 on x-axis, move 41 on y-axis.
 For red channel: move 29 on x-axis, move 85 on y-axis.&lt;/p&gt;
+&lt;h5 id=&#34;two-result-from-prokudin-gorskii-collection&#34;&gt;Two result from Prokudin-Gorskii collection:&lt;/h5&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td align=&#34;center&#34;&gt;
+      &lt;img src=&#34;https://s2.loli.net/2024/09/10/6y9vmReCZTaKJE3.jpg&#34; alt=&#34;Stacked w/o simple alignment&#34; width=&#34;400&#34;&gt;&lt;br&gt;
+      &lt;em&gt;Stacked w/o simple alignment&lt;/em&gt;
+    &lt;/td&gt;
+    &lt;td align=&#34;center&#34;&gt;
+      &lt;img src=&#34;https://s2.loli.net/2024/09/10/9wq5mNuAEvxgbc3.jpg&#34; alt=&#34;Stacked w/ simple alignment&#34; width=&#34;400&#34;&gt;&lt;br&gt;
+      &lt;em&gt;Stacked w/ simple alignment&lt;/em&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Best matching displacement for more.jpg (Using blue channel as base image):
+For green channel: move 2 on x-axis, move 4 on y-axis.
+For red channel: move 4 on x-axis, move 7 on y-axis.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2024/09/10/qEjYsOtgfNWPJUx.jpg&#34; alt=&#34;canny_image_more2_b_edges.jpg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2024/09/10/tWP1VDoXB52SNOl.jpg&#34; alt=&#34;canny_image_more2_g_edges.jpg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2024/09/10/5WDsxVnoqHAc12j.jpg&#34; alt=&#34;canny_image_more2_r_edges.jpg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;boy canny blue channel&lt;/td&gt;
+&lt;td&gt;boy canny green channel&lt;/td&gt;
+&lt;td&gt;boy canny red channel&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2024/09/10/lk7wC8hDJLcitO5.jpg&#34; alt=&#34;cropped_color_image_more2.jpg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2024/09/10/N2IoiV5e8wLYyca.jpg&#34; alt=&#34;canny_aligned_color_image_more2.jpg&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+&lt;p style=&#34;text-align: center;&#34;&gt;&lt;em&gt;Picture Selected: boy&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Best matching displacement for boy.tif (Using blue channel as base image):
+For green channel: move -14 on x-axis, move 45 on y-axis.
+For red channel: move -11 on x-axis, move 103 on y-axis.&lt;/p&gt;
 &lt;h2 id=&#34;part5-my-debugging-journey&#34;&gt;Part5: My debugging journey&lt;/h2&gt;
 &lt;p&gt;Although it&amp;rsquo;s nothing important or difficult, I got a bad result on image pyramid implementation due to the false understanding of &lt;code&gt;np.roll&lt;/code&gt; at first. It was not until I viewed the previous post when I realized that it wasn&amp;rsquo;t the pictures that are hard to align, it was my function wrong. My Bells&amp;amp;Whistles is originally an attempt to rotate the picture to achieve alignment. But obviously, if the base method is wrong, there&amp;rsquo;s no way for this attempt to be right.&lt;/p&gt;
 &lt;p&gt;The way &lt;code&gt;np.roll&lt;/code&gt; handles image translation is to move the section out of the border to the gap created at the other side. So if the original image has black edges on both left and the right side, rolling left means the black edge on the left transferred to the right of the original right black edge, which doesn&amp;rsquo;t contribute to reducing the L2 norm and therefore pictures won&amp;rsquo;t match in the end. In short, counteract the effect of &lt;code&gt;np.roll&lt;/code&gt; in the recursion bit of the function, which will help reducing the L2 norm dramatically, and keep the effect of &lt;code&gt;np.roll&lt;/code&gt; at the last level of the pixel calculation.&lt;/p&gt;

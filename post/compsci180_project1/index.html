@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: September 3, 2024 --><html lang="en-us" >
+<!-- Last Published: September 9, 2024 --><html lang="en-us" >
 
 
 <head>
@@ -843,7 +843,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    7 min read
+    8 min read
   </span>
   
 
@@ -2140,6 +2140,150 @@ For red channel: move 37 on x-axis, move 175 on y-axis.</p>
 <p>Best matching displacement for train.tif (Using blue channel as base image):
 For green channel: move 0 on x-axis, move 41 on y-axis.
 For red channel: move 29 on x-axis, move 85 on y-axis.</p>
+<h5 id="two-result-from-prokudin-gorskii-collection">Two result from Prokudin-Gorskii collection:</h5>
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/10/6y9vmReCZTaKJE3.jpg" alt="Stacked w/o simple alignment" width="400"><br>
+      <em>Stacked w/o simple alignment</em>
+    </td>
+    <td align="center">
+      <img src="https://s2.loli.net/2024/09/10/9wq5mNuAEvxgbc3.jpg" alt="Stacked w/ simple alignment" width="400"><br>
+      <em>Stacked w/ simple alignment</em>
+    </td>
+  </tr>
+</table>
+<p>Best matching displacement for more.jpg (Using blue channel as base image):
+For green channel: move 2 on x-axis, move 4 on y-axis.
+For red channel: move 4 on x-axis, move 7 on y-axis.</p>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/10/qEjYsOtgfNWPJUx.jpg" alt="canny_image_more2_b_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/10/tWP1VDoXB52SNOl.jpg" alt="canny_image_more2_g_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/10/5WDsxVnoqHAc12j.jpg" alt="canny_image_more2_r_edges.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boy canny blue channel</td>
+<td>boy canny green channel</td>
+<td>boy canny red channel</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/10/lk7wC8hDJLcitO5.jpg" alt="cropped_color_image_more2.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2024/09/10/N2IoiV5e8wLYyca.jpg" alt="canny_aligned_color_image_more2.jpg" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+</table>
+<p style="text-align: center;"><em>Picture Selected: boy</em></p>
+<p>Best matching displacement for boy.tif (Using blue channel as base image):
+For green channel: move -14 on x-axis, move 45 on y-axis.
+For red channel: move -11 on x-axis, move 103 on y-axis.</p>
 <h2 id="part5-my-debugging-journey">Part5: My debugging journey</h2>
 <p>Although it&rsquo;s nothing important or difficult, I got a bad result on image pyramid implementation due to the false understanding of <code>np.roll</code> at first. It was not until I viewed the previous post when I realized that it wasn&rsquo;t the pictures that are hard to align, it was my function wrong. My Bells&amp;Whistles is originally an attempt to rotate the picture to achieve alignment. But obviously, if the base method is wrong, there&rsquo;s no way for this attempt to be right.</p>
 <p>The way <code>np.roll</code> handles image translation is to move the section out of the border to the gap created at the other side. So if the original image has black edges on both left and the right side, rolling left means the black edge on the left transferred to the right of the original right black edge, which doesn&rsquo;t contribute to reducing the L2 norm and therefore pictures won&rsquo;t match in the end. In short, counteract the effect of <code>np.roll</code> in the recursion bit of the function, which will help reducing the L2 norm dramatically, and keep the effect of <code>np.roll</code> at the last level of the pixel calculation.</p>
