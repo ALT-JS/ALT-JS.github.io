@@ -10,12 +10,16 @@
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://alt-js.github.io/post/compsci180_project1/</loc>
-    <lastmod>2024-09-03T00:00:00+00:00</lastmod>
+    <loc>https://alt-js.github.io/project/layerbylayer/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://alt-js.github.io/post/</loc>
-    <lastmod>2024-09-03T00:00:00+00:00</lastmod>
+    <loc>https://alt-js.github.io/project/</loc>
+    <lastmod>2025-01-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://alt-js.github.io/project/zen/</loc>
+    <lastmod>2024-11-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://alt-js.github.io/publication/conference-paper/imhoi/</loc>
@@ -42,10 +46,6 @@
     <lastmod>2020-10-27T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>https://alt-js.github.io/project/</loc>
-    <lastmod>2020-10-27T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>https://alt-js.github.io/slides/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -55,6 +55,9 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://alt-js.github.io/categories/</loc>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>https://alt-js.github.io/post/</loc>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>https://alt-js.github.io/tags/</loc>
