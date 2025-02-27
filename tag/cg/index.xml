@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cg | JiashenDu Homepage</title>
+    <link>https://alt-js.github.io/tag/cg/</link>
+      <atom:link href="https://alt-js.github.io/tag/cg/index.xml" rel="self" type="application/rss+xml" />
+    <description>cg</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 01 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png</url>
+      <title>cg</title>
+      <link>https://alt-js.github.io/tag/cg/</link>
+    </image>
+    
+    <item>
+      <title>Foundations of Computer Graphics Projects</title>
+      <link>https://alt-js.github.io/post/compsci184/</link>
+      <pubDate>Sat, 01 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/compsci184/</guid>
+      <description>&lt;h2 id=&#34;cs-184284a-spring-2025&#34;&gt;CS 184/284A Spring 2025&lt;/h2&gt;
+&lt;h2 id=&#34;contents&#34;&gt;Contents&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj1/&#34;&gt;Project1: The Simple Rasterizer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -5,12 +5,34 @@
     <link>https://alt-js.github.io/post/</link>
       <atom:link href="https://alt-js.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 18 Feb 2025 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png</url>
       <title>Posts</title>
       <link>https://alt-js.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>COMPSCI 184 Project1: The Simple Rasterizer</title>
+      <link>https://alt-js.github.io/post/184pj1/</link>
+      <pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/184pj1/</guid>
+      <description>&lt;embed src=&#34;CS184PJ1Writeup.pdf&#34; type=&#34;application/pdf&#34; width=&#34;100%&#34; height=&#34;600px&#34; /&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Foundations of Computer Graphics Projects</title>
+      <link>https://alt-js.github.io/post/compsci184/</link>
+      <pubDate>Sat, 01 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/compsci184/</guid>
+      <description>&lt;h2 id=&#34;cs-184284a-spring-2025&#34;&gt;CS 184/284A Spring 2025&lt;/h2&gt;
+&lt;h2 id=&#34;contents&#34;&gt;Contents&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj1/&#34;&gt;Project1: The Simple Rasterizer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
   </channel>
 </rss>
