@@ -13,9 +13,522 @@
     </image>
     
     <item>
+      <title>COMPSCI 184 Project2: Geometric Modeling</title>
+      <link>https://alt-js.github.io/post/184pj2/</link>
+      <pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/184pj2/</guid>
+      <description>&lt;h2 id=&#34;part-0-project-overview&#34;&gt;Part 0: Project overview&lt;/h2&gt;
+&lt;p&gt;This homework focuses on implementing fundamental operations related to Bezier curves, Bezier patches, mesh manipulation, and Loop subdivision. In this project, we started out from the basic Bezier curve and de Casteljau algorithm, and extend it to 2D surfaces. We also made a fully functional mesh &amp;ldquo;editor&amp;rdquo; that does edge flipping, edge splitting and mesh upsampling. The most challenging parts were ensuring correct pointer assignments in the edge splitting and properly handling &lt;code&gt;newEdge&lt;/code&gt; in Loop subdivision.&lt;/p&gt;
+&lt;h1 id=&#34;section-1-bezier-curves-and-surfaces&#34;&gt;Section 1: Bezier Curves and Surfaces&lt;/h1&gt;
+&lt;h2 id=&#34;part-1-bezier-curves-with-1d-de-casteljau-subdivision&#34;&gt;Part 1: Bezier Curves with 1D de Casteljau Subdivision&lt;/h2&gt;
+&lt;h3 id=&#34;briefly-explain-de-casteljaus-algorithm-and-how-you-implemented-it-in-order-to-evaluate-bezier-curves&#34;&gt;Briefly explain de Casteljau’s algorithm and how you implemented it in order to evaluate Bezier curves.&lt;/h3&gt;
+&lt;p&gt;De Casteljau&amp;rsquo;s algorithm is used to determine the point on the Bezier curve of a certain number of points. For $n$ points, we iteratively use linear interpolation to determine $n-1$ points, until we only have one point, which is $p_{\frac{n(n-1)}{2}}$. This particular point will be on the Bezier curve of $p_{0}$ and $p_{n-1}$ from the original $n$ points.&lt;/p&gt;
+&lt;p&gt;I wrote a seperate &lt;code&gt;lerp&lt;/code&gt; function and iterate it through all the points. The &lt;code&gt;lerp&lt;/code&gt; function is defined as:
+
+
+
+$$\text{lerp}(p_i, p_{i+1}, t) = (1 - t) p_i + t p_{i + 1}$$
+
+The new points generated is the one-step result of all the original points.&lt;/p&gt;
+&lt;h3 id=&#34;the-bezier-curve-with-6-control-points&#34;&gt;The Bezier curve with 6 control points&lt;/h3&gt;
+&lt;p&gt;The six pictures below shows the 5 steps of evaluation of the original 6 control points and the final bezier of the points.&lt;/p&gt;
+&lt;div style=&#34;display: grid; grid-template-columns: repeat(2, 2fr); gap: 10px;&#34;&gt;
+    &lt;img src=&#34;https://s2.loli.net/2025/02/27/piCm81GaKkMHJDt.png&#34; width=&#34;300&#34;&gt;
+    &lt;img src=&#34;https://s2.loli.net/2025/02/27/wkpT9gBd8HcjNEI.png&#34; width=&#34;300&#34;&gt;
+    &lt;img src=&#34;https://s2.loli.net/2025/02/27/fIQkrm3ZJBbVzWE.png&#34; width=&#34;300&#34;&gt;
+    &lt;img src=&#34;https://s2.loli.net/2025/02/27/3SFZzB69aqbUkuW.png&#34; width=&#34;300&#34;&gt;
+    &lt;img src=&#34;https://s2.loli.net/2025/02/27/OAn197glD8jyLNY.png&#34; width=&#34;300&#34;&gt;
+    &lt;img src=&#34;https://s2.loli.net/2025/02/27/wixVUPGJHTMAmCo.png&#34; width=&#34;300&#34;&gt;
+&lt;/div&gt;
+&lt;p&gt;In this picture I changed the position of the points and the $t$ value.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  id=&#34;figure-a-slightly-different-bezier-curve&#34;&gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/02/27/dWjQbgScHh7a3PX.png&#34; alt=&#34;A slightly different Bezier curve&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;figcaption&gt;
+      A slightly different Bezier curve
+    &lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;part-2-bezier-surfaces-with-separable-1d-de-casteljau&#34;&gt;Part 2: Bezier Surfaces with Separable 1D de Casteljau&lt;/h2&gt;
+&lt;h3 id=&#34;briefly-explain-how-de-casteljau-algorithm-extends-to-bezier-surfaces-and-how-you-implemented-it-in-order-to-evaluate-bezier-surfaces&#34;&gt;Briefly explain how de Casteljau algorithm extends to Bezier surfaces and how you implemented it in order to evaluate Bezier surfaces.&lt;/h3&gt;
+&lt;p&gt;The de Casteljau&amp;rsquo;s algorithm naturally extends to Bezier surfaces by applying the same interpolation process in two directions $u$ and $v$. For each row of control points $P(i,j)$, apply the de Casteljau algorithm recursively to compute an intermediate set of points at parameter $u$, reducing the row into a single point. Once you have the intermediate points from the previous step, apply de Casteljau along the $v$-direction to interpolate these points and obtain the final surface point $S(u,v)$.&lt;/p&gt;
+&lt;p&gt;I modified the &lt;code&gt;lerp&lt;/code&gt; function to make it accept &lt;code&gt;Vector3D&lt;/code&gt; inputs and outputs, and the &lt;code&gt;evaluate&lt;/code&gt; process is just call &lt;code&gt;evaluate1D&lt;/code&gt; on controlPoints, and return with the results of the previous loop being run in the &lt;code&gt;evaluate1D&lt;/code&gt; again but with a different interpolation parameter. The &lt;code&gt;evaluate1D&lt;/code&gt; function also loops through points with &lt;code&gt;evaluateStep&lt;/code&gt; but only returns the 0-th dimension of the result.&lt;/p&gt;
+&lt;h3 id=&#34;the-teapot-result&#34;&gt;The teapot result&lt;/h3&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  id=&#34;figure-the-screenshot-of-bezteapotbez-evaluated-by-my-implementation&#34;&gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/02/27/HfmGqn4UWvBTpbP.png&#34; alt=&#34;the screenshot of `bez/teapot.bez` evaluated by my implementation&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;figcaption&gt;
+      the screenshot of &lt;code&gt;bez/teapot.bez&lt;/code&gt; evaluated by my implementation
+    &lt;/figcaption&gt;&lt;/figure&gt;
+
+&lt;h2 id=&#34;part-3-area-weighted-vertex-normals&#34;&gt;Part 3: Area-Weighted Vertex Normals&lt;/h2&gt;
+&lt;h3 id=&#34;briefly-explain-how-you-implemented-the-area-weighted-vertex-normals&#34;&gt;Briefly explain how you implemented the area-weighted vertex normals.&lt;/h3&gt;
+&lt;p&gt;Started with one halfedge, we iterate through every halfedge. For every halfedge, we extract the previous, current, next vertex position, and calculate the cross product of vectors defined by current and next vertex and current and previous vertex. We add up all the cross products and restore it to unit vector as the output.&lt;/p&gt;
+&lt;h3 id=&#34;the-teapot-result-1&#34;&gt;The teapot result&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/AJwZbInO9fBehc2.png&#34; alt=&#34;3-flat.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/mblVCkjNiun8sXJ.png&#34; alt=&#34;3-phong.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;default flat shading&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Phong shading&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;part-4-edge-flip&#34;&gt;Part 4: Edge Flip&lt;/h2&gt;
+&lt;h3 id=&#34;briefly-explain-how-you-implemented-the-edge-flip-operation&#34;&gt;Briefly explain how you implemented the edge flip operation.&lt;/h3&gt;
+&lt;p&gt;I first determine every possible element of a unit pair of triangles, then, I changed the relations of every possible related halfedge using &lt;code&gt;setNeighbors&lt;/code&gt; function, and assign the faces and vertices with the correct halfedge in the end. Here&amp;rsquo;s a picture that contains all the notations I&amp;rsquo;m using in my code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  id=&#34;figure-flip-edge-draft&#34;&gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/WrGMPZszA5bd8ap.png&#34; alt=&#34;Flip edge draft&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;figcaption&gt;
+      Flip edge draft
+    &lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;the-teapot-result-2&#34;&gt;The teapot result&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/gFQa8CGeAH4lYMD.png&#34; alt=&#34;4-original.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/bNqGmDOSWnVrEh9.png&#34; alt=&#34;4-flipped.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;The original teapot&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;The teapot woth some flipped edges&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;the-freakindebug-journey&#34;&gt;The freakin&amp;rsquo;debug journey&lt;/h3&gt;
+&lt;p&gt;From the draft, you probably noticed that I initially wrote the vertex $c$ and $d$ in the wrong place. Because I sticked to my draft so closely, I kept checking the errors in my code, not the draft itself:(.&lt;/p&gt;
+&lt;h2 id=&#34;part-5-edge-split&#34;&gt;Part 5: Edge Split&lt;/h2&gt;
+&lt;h3 id=&#34;briefly-explain-how-you-implemented-the-edge-split-operation&#34;&gt;Briefly explain how you implemented the edge split operation&lt;/h3&gt;
+&lt;p&gt;I first did all the things similar to the &lt;code&gt;filpEdge&lt;/code&gt; function(determine possible elements), then I created new edge, face and halfedges. For the new edgeHere’s a picture that contains all the notations I’m using in my code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  id=&#34;figure-split-edge-draft&#34;&gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/K3AQNaltcrGRmJw.png&#34; alt=&#34;Split edge draft&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;figcaption&gt;
+      Split edge draft
+    &lt;/figcaption&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;some-teapot-result&#34;&gt;Some teapot result&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/3tdvjYxD7clyfSe.png&#34; alt=&#34;5-original.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/hsd3pgJiZX4mkTY.png&#34; alt=&#34;5-split.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/EenLAPbxRMaXrFf.png&#34; alt=&#34;5-splitflip.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;The original teapot&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;The teapot with some split edges&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;The teapot with some splits and filpped edges&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;part-6-loop-subdivision-for-mesh-upsampling&#34;&gt;Part 6: Loop Subdivision for Mesh Upsampling&lt;/h2&gt;
+&lt;h3 id=&#34;briefly-explain-how-you-implemented-the-loop-subdivision&#34;&gt;Briefly explain how you implemented the loop subdivision&lt;/h3&gt;
+&lt;p&gt;I first compute new positions for all the vertices in the input mesh, using the weighted average formula given in the question. Mark each vertex as being a vertex of the original mesh, and compute the updated vertex positions associated with edges new positions. Then loop through the mesh to split edges and setting new halfedges generated, as well as filp any new edge that connects an old and new vertex to make the mesh more &amp;ldquo;organized&amp;rdquo;. Finally we copy the new vertex positions into &lt;code&gt;Vertex::position&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;how-meshes-behave-after-loop-subdivision&#34;&gt;How meshes behave after loop subdivision?&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/EcgSYzGNr3Aho2j.png&#34; alt=&#34;6-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/cMblmfDSrW1AyGE.png&#34; alt=&#34;6-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/pxUJqVXGBuF6vYh.png&#34; alt=&#34;6-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/nyoKM7lk3mDSjJF.png&#34; alt=&#34;6-4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Meshes becomes &amp;ldquo;smoothed out&amp;rdquo; after multiple times of loop subdivisions. Sharp edges and corners become more rounded and less sharper than before.&lt;/p&gt;
+&lt;p&gt;Yes, pre-splitting some edges works. Loop subdivision applies a weighted averaging scheme when repositioning vertices. If edges are closely spaced(i.e. pre-splitting to make edges closely spaced / evenly spaced), the averaging effect is localized rather than spread out over a large area, reducing the smoothing effect.&lt;/p&gt;
+&lt;h3 id=&#34;the-asymmetric-cube&#34;&gt;The Asymmetric Cube&lt;/h3&gt;
+&lt;p&gt;Asymmetry appears after multiple iterations, despite the cube starting with a symmetric structure. This happens due to the cube&amp;rsquo;s original topology, where each face consists of two triangles (not four evenly distributed ones).&lt;/p&gt;
+&lt;p&gt;Loop subdivision refines each triangle individually, meaning that if some edges are longer or unevenly split, the algorithm treats them differently and there&amp;rsquo;s asymmetric. The cube&amp;rsquo;s initial triangulation pattern isn&amp;rsquo;t perfectly symmetrical, leading to small &amp;ldquo;drifts&amp;rdquo; after each iteration.&lt;/p&gt;
+&lt;p&gt;So, by pre-splitting the cube by adding a &amp;ldquo;cut&amp;rdquo; to each surface(formed by 2 triangles/faces), we are able to get a balanced cube. Because every surface are pre-splitted to be exactly the same and symmetrical, so after subdivision, they still remain the same shape and still be symmetrical on same directions.&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  id=&#34;figure-the-pre-split-cube&#34;&gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/nO1Lz28iMFSTbZG.png&#34; alt=&#34;The pre-split cube&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;figcaption&gt;
+      The pre-split cube
+    &lt;/figcaption&gt;&lt;/figure&gt;
+
+&lt;p&gt;Here is a comparison between original cube and the pre-splitted cube after 4 times of subdivisions.(Left: og. Right: pre-splitted.)&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/nyoKM7lk3mDSjJF.png&#34; alt=&#34;6-4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/01/FAwiQjGgW4HKBJP.png&#34; alt=&#34;6-comparison.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
       <title>COMPSCI 184 Project1: The Simple Rasterizer</title>
       <link>https://alt-js.github.io/post/184pj1/</link>
-      <pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 04 Feb 2025 00:00:00 +0000</pubDate>
       <guid>https://alt-js.github.io/post/184pj1/</guid>
       <description>&lt;embed src=&#34;CS184PJ1Writeup.pdf&#34; type=&#34;application/pdf&#34; width=&#34;100%&#34; height=&#34;600px&#34; /&gt;
 </description>
@@ -29,7 +542,12 @@
       <description>&lt;h2 id=&#34;cs-184284a-spring-2025&#34;&gt;CS 184/284A Spring 2025&lt;/h2&gt;
 &lt;h2 id=&#34;contents&#34;&gt;Contents&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj1/&#34;&gt;Project1: The Simple Rasterizer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj1/&#34;&gt;Project 1: The Simple Rasterizer&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj2/&#34;&gt;Project 2: Geometric Modeling&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
