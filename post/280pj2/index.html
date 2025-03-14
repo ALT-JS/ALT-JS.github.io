@@ -282,12 +282,13 @@
 
   
 
-<meta name="description" content="Part 0: Project overview This homework focuses on implementing fundamental operations related to Bezier curves, Bezier patches, mesh manipulation, and Loop subdivision. In this project, we started out from the basic Bezier curve and de Casteljau algorithm, and extend it to 2D surfaces." />
+<meta name="description" content="Overview You will train your own flow matching model on MNIST.
+Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Visualization of the noising process Training loss curve Sample results on the test set after the first and the 5-th epoch Sample results on the test set with out-of-distribution noise levels after the model is trained." />
 
 
 
-<link rel="alternate" hreflang="en-us" href="https://alt-js.github.io/post/184pj2/" />
-<link rel="canonical" href="https://alt-js.github.io/post/184pj2/" />
+<link rel="alternate" hreflang="en-us" href="https://alt-js.github.io/post/280pj2/" />
+<link rel="canonical" href="https://alt-js.github.io/post/280pj2/" />
 
 
 
@@ -329,18 +330,19 @@
 
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="JiashenDu Homepage" />
-<meta property="og:url" content="https://alt-js.github.io/post/184pj2/" />
-<meta property="og:title" content="COMPSCI 184 Project2: Geometric Modeling | JiashenDu Homepage" />
-<meta property="og:description" content="Part 0: Project overview This homework focuses on implementing fundamental operations related to Bezier curves, Bezier patches, mesh manipulation, and Loop subdivision. In this project, we started out from the basic Bezier curve and de Casteljau algorithm, and extend it to 2D surfaces." /><meta property="og:image" content="https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+<meta property="og:url" content="https://alt-js.github.io/post/280pj2/" />
+<meta property="og:title" content="COMPSCI 280 Project2: Flow Matching | JiashenDu Homepage" />
+<meta property="og:description" content="Overview You will train your own flow matching model on MNIST.
+Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Visualization of the noising process Training loss curve Sample results on the test set after the first and the 5-th epoch Sample results on the test set with out-of-distribution noise levels after the model is trained." /><meta property="og:image" content="https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
 
   
     <meta
       property="article:published_time"
-      content="2025-02-18T00:00:00&#43;00:00"
+      content="2025-03-09T00:00:00&#43;00:00"
     />
   
   
-    <meta property="article:modified_time" content="2025-02-18T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2025-03-09T00:00:00&#43;00:00">
   
 
 
@@ -366,12 +368,12 @@
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://alt-js.github.io/post/184pj2/"
+    "@id": "https://alt-js.github.io/post/280pj2/"
   },
-  "headline": "COMPSCI 184 Project2: Geometric Modeling",
+  "headline": "COMPSCI 280 Project2: Flow Matching",
   
-  "datePublished": "2025-02-18T00:00:00Z",
-  "dateModified": "2025-02-18T00:00:00Z",
+  "datePublished": "2025-03-09T00:00:00Z",
+  "dateModified": "2025-03-09T00:00:00Z",
   
   "author": {
     "@type": "Person",
@@ -386,7 +388,7 @@
       "url": "https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_192x192_fill_lanczos_center_3.png"
     }
   },
-  "description": "Part 0: Project overview This homework focuses on implementing fundamental operations related to Bezier curves, Bezier patches, mesh manipulation, and Loop subdivision. In this project, we started out from the basic Bezier curve and de Casteljau algorithm, and extend it to 2D surfaces."
+  "description": "Overview You will train your own flow matching model on MNIST.\nPart 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Visualization of the noising process Training loss curve Sample results on the test set after the first and the 5-th epoch Sample results on the test set with out-of-distribution noise levels after the model is trained."
 }
 </script>
 
@@ -408,7 +410,7 @@
 
 
   
-  <title>COMPSCI 184 Project2: Geometric Modeling | JiashenDu Homepage</title>
+  <title>COMPSCI 280 Project2: Flow Matching | JiashenDu Homepage</title>
 
   
   
@@ -428,7 +430,7 @@
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="e9d23a9ec0d689ae9458043415953aee" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="93339e616d1e686cc6422476ea78c8c0" >
 
   
   
@@ -805,10 +807,10 @@
   
   
 <div class="article-container pt-3">
-  <h1>COMPSCI 184 Project2: Geometric Modeling</h1>
+  <h1>COMPSCI 280 Project2: Flow Matching</h1>
 
   
-  <p class="page-subtitle">build Bezier curves and surfaces using de Casteljau algorithm, manipulate triangle meshes represented by half-edge data structure, and implement loop subdivision</p>
+  <p class="page-subtitle">an updated version of CS180 Project 5 part B with flow matching instead of DDPM diffusion</p>
   
 
   
@@ -826,7 +828,7 @@
     
       
     
-    Feb 18, 2025
+    Mar 9, 2025
   </span>
   
 
@@ -835,7 +837,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    5 min read
+    1 min read
   </span>
   
 
@@ -863,30 +865,11 @@
   <div class="article-container">
 
     <div class="article-style">
-      <h2 id="part-0-project-overview">Part 0: Project overview</h2>
-<p>This homework focuses on implementing fundamental operations related to Bezier curves, Bezier patches, mesh manipulation, and Loop subdivision. In this project, we started out from the basic Bezier curve and de Casteljau algorithm, and extend it to 2D surfaces. We also made a fully functional mesh &ldquo;editor&rdquo; that does edge flipping, edge splitting and mesh upsampling. The most challenging parts were ensuring correct pointer assignments in the edge splitting and properly handling <code>newEdge</code> in Loop subdivision.</p>
-<h1 id="section-1-bezier-curves-and-surfaces">Section 1: Bezier Curves and Surfaces</h1>
-<h2 id="part-1-bezier-curves-with-1d-de-casteljau-subdivision">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h2>
-<h3 id="briefly-explain-de-casteljaus-algorithm-and-how-you-implemented-it-in-order-to-evaluate-bezier-curves">Briefly explain de Casteljau’s algorithm and how you implemented it in order to evaluate Bezier curves.</h3>
-<p>De Casteljau&rsquo;s algorithm is used to determine the point on the Bezier curve of a certain number of points. For $n$ points, we iteratively use linear interpolation to determine $n-1$ points, until we only have one point, which is $p_{\frac{n(n-1)}{2}}$. This particular point will be on the Bezier curve of $p_{0}$ and $p_{n-1}$ from the original $n$ points.</p>
-<p>I wrote a seperate <code>lerp</code> function and iterate it through all the points. The <code>lerp</code> function is defined as:
-
-
-
-$$\text{lerp}(p_i, p_{i+1}, t) = (1 - t) p_i + t p_{i + 1}$$
-
-The new points generated is the one-step result of all the original points.</p>
-<h3 id="the-bezier-curve-with-6-control-points">The Bezier curve with 6 control points</h3>
-<p>The six pictures below shows the 5 steps of evaluation of the original 6 control points and the final bezier of the points.</p>
-<div style="display: grid; grid-template-columns: repeat(2, 2fr); gap: 10px;">
-    <img src="https://s2.loli.net/2025/02/27/piCm81GaKkMHJDt.png" width="300">
-    <img src="https://s2.loli.net/2025/02/27/wkpT9gBd8HcjNEI.png" width="300">
-    <img src="https://s2.loli.net/2025/02/27/fIQkrm3ZJBbVzWE.png" width="300">
-    <img src="https://s2.loli.net/2025/02/27/3SFZzB69aqbUkuW.png" width="300">
-    <img src="https://s2.loli.net/2025/02/27/OAn197glD8jyLNY.png" width="300">
-    <img src="https://s2.loli.net/2025/02/27/wixVUPGJHTMAmCo.png" width="300">
-</div>
-<p>In this picture I changed the position of the points and the $t$ value.
+      <h2 id="overview">Overview</h2>
+<p>You will train your own flow matching model on MNIST.</p>
+<h2 id="part-1-training-a-single-step-denoising-unet">Part 1: Training a Single-Step Denoising UNet</h2>
+<h3 id="unconditioned-unet-architecture">Unconditioned UNet architecture</h3>
+<p>
 
 
 
@@ -902,54 +885,34 @@ The new points generated is the one-step result of all the original points.</p>
 
 
 
-
-
-
-<figure  id="figure-a-slightly-different-bezier-curve">
+<figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/02/27/dWjQbgScHh7a3PX.png" alt="A slightly different Bezier curve" loading="lazy" data-zoomable /></div>
-  </div><figcaption>
-      A slightly different Bezier curve
-    </figcaption></figure>
+    <div class="w-100" ><img src="https://cal-cs180.github.io/fa24/hw/proj5/assets/unconditional_arch.png" alt="fig1" loading="lazy" data-zoomable /></div>
+  </div></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://cal-cs180.github.io/fa24/hw/proj5/assets/atomic_ops_new.png" alt="fig2" loading="lazy" data-zoomable /></div>
+  </div></figure>
 </p>
-<h2 id="part-2-bezier-surfaces-with-separable-1d-de-casteljau">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h2>
-<h3 id="briefly-explain-how-de-casteljau-algorithm-extends-to-bezier-surfaces-and-how-you-implemented-it-in-order-to-evaluate-bezier-surfaces">Briefly explain how de Casteljau algorithm extends to Bezier surfaces and how you implemented it in order to evaluate Bezier surfaces.</h3>
-<p>The de Casteljau&rsquo;s algorithm naturally extends to Bezier surfaces by applying the same interpolation process in two directions $u$ and $v$. For each row of control points $P(i,j)$, apply the de Casteljau algorithm recursively to compute an intermediate set of points at parameter $u$, reducing the row into a single point. Once you have the intermediate points from the previous step, apply de Casteljau along the $v$-direction to interpolate these points and obtain the final surface point $S(u,v)$.</p>
-<p>I modified the <code>lerp</code> function to make it accept <code>Vector3D</code> inputs and outputs, and the <code>evaluate</code> process is just call <code>evaluate1D</code> on controlPoints, and return with the results of the previous loop being run in the <code>evaluate1D</code> again but with a different interpolation parameter. The <code>evaluate1D</code> function also loops through points with <code>evaluateStep</code> but only returns the 0-th dimension of the result.</p>
-<h3 id="the-teapot-result">The teapot result</h3>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  id="figure-the-screenshot-of-bezteapotbez-evaluated-by-my-implementation">
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/02/27/HfmGqn4UWvBTpbP.png" alt="the screenshot of `bez/teapot.bez` evaluated by my implementation" loading="lazy" data-zoomable /></div>
-  </div><figcaption>
-      the screenshot of <code>bez/teapot.bez</code> evaluated by my implementation
-    </figcaption></figure>
-
-<h2 id="part-3-area-weighted-vertex-normals">Part 3: Area-Weighted Vertex Normals</h2>
-<h3 id="briefly-explain-how-you-implemented-the-area-weighted-vertex-normals">Briefly explain how you implemented the area-weighted vertex normals.</h3>
-<p>Started with one halfedge, we iterate through every halfedge. For every halfedge, we extract the previous, current, next vertex position, and calculate the cross product of vectors defined by current and next vertex and current and previous vertex. We add up all the cross products and restore it to unit vector as the output.</p>
-<h3 id="the-teapot-result-1">The teapot result</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">
+<h3 id="visualization-of-the-noising-process">Visualization of the noising process</h3>
+<p>
 
 
 
@@ -967,72 +930,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/AJwZbInO9fBehc2.png" alt="3-flat.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/VapRt2jWhLcIC5m.png" alt="fig3.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-<th style="text-align:center">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/mblVCkjNiun8sXJ.png" alt="3-phong.png" loading="lazy" data-zoomable /></div>
-  </div></figure>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">default flat shading</td>
-<td style="text-align:center">Phong shading</td>
-</tr>
-</tbody>
-</table>
-<h2 id="part-4-edge-flip">Part 4: Edge Flip</h2>
-<h3 id="briefly-explain-how-you-implemented-the-edge-flip-operation">Briefly explain how you implemented the edge flip operation.</h3>
-<p>I first determine every possible element of a unit pair of triangles, then, I changed the relations of every possible related halfedge using <code>setNeighbors</code> function, and assign the faces and vertices with the correct halfedge in the end. Here&rsquo;s a picture that contains all the notations I&rsquo;m using in my code.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  id="figure-flip-edge-draft">
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/WrGMPZszA5bd8ap.png" alt="Flip edge draft" loading="lazy" data-zoomable /></div>
-  </div><figcaption>
-      Flip edge draft
-    </figcaption></figure>
 </p>
-<h3 id="the-teapot-result-2">The teapot result</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">
+<h3 id="training-loss-curve">Training loss curve</h3>
+<p>
 
 
 
@@ -1050,74 +952,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/gFQa8CGeAH4lYMD.png" alt="4-original.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/Xo6LJGaAh3bKsNF.png" alt="fig4.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-<th style="text-align:center">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/bNqGmDOSWnVrEh9.png" alt="4-flipped.png" loading="lazy" data-zoomable /></div>
-  </div></figure>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">The original teapot</td>
-<td style="text-align:center">The teapot woth some flipped edges</td>
-</tr>
-</tbody>
-</table>
-<h3 id="the-freakindebug-journey">The freakin&rsquo;debug journey</h3>
-<p>From the draft, you probably noticed that I initially wrote the vertex $c$ and $d$ in the wrong place. Because I sticked to my draft so closely, I kept checking the errors in my code, not the draft itself:(.</p>
-<h2 id="part-5-edge-split">Part 5: Edge Split</h2>
-<h3 id="briefly-explain-how-you-implemented-the-edge-split-operation">Briefly explain how you implemented the edge split operation</h3>
-<p>I first did all the things similar to the <code>filpEdge</code> function(determine possible elements), then I created new edge, face and halfedges. For the new edgeHere’s a picture that contains all the notations I’m using in my code.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  id="figure-split-edge-draft">
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/K3AQNaltcrGRmJw.png" alt="Split edge draft" loading="lazy" data-zoomable /></div>
-  </div><figcaption>
-      Split edge draft
-    </figcaption></figure>
 </p>
-<h3 id="some-teapot-result">Some teapot result</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">
+<h3 id="sample-results-on-the-test-set-after-the-first-and-the-5-th-epoch">Sample results on the test set after the first and the 5-th epoch</h3>
+<p>
 
 
 
@@ -1135,10 +974,10 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/3tdvjYxD7clyfSe.png" alt="5-original.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/1JgCnLkd5ZFaTeu.png" alt="fig5.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-<th style="text-align:center">
+
+
 
 
 
@@ -1156,10 +995,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/hsd3pgJiZX4mkTY.png" alt="5-split.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/7K12zJM4ox6Icm8.png" alt="fig6.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-<th style="text-align:center">
+</p>
+<h3 id="sample-results-on-the-test-set-with-out-of-distribution-noise-levels-after-the-model-is-trained">Sample results on the test set with out-of-distribution noise levels after the model is trained.</h3>
+<p>
 
 
 
@@ -1177,27 +1017,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/EenLAPbxRMaXrFf.png" alt="5-splitflip.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/13/tzSuKb4QPysqL7A.png" alt="fig7.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">The original teapot</td>
-<td style="text-align:center">The teapot with some split edges</td>
-<td style="text-align:center">The teapot with some splits and filpped edges</td>
-</tr>
-</tbody>
-</table>
-<h2 id="part-6-loop-subdivision-for-mesh-upsampling">Part 6: Loop Subdivision for Mesh Upsampling</h2>
-<h3 id="briefly-explain-how-you-implemented-the-loop-subdivision">Briefly explain how you implemented the loop subdivision</h3>
-<p>I first compute new positions for all the vertices in the input mesh, using the weighted average formula given in the question. Mark each vertex as being a vertex of the original mesh, and compute the updated vertex positions associated with edges new positions. Then loop through the mesh to split edges and setting new halfedges generated, as well as filp any new edge that connects an old and new vertex to make the mesh more &ldquo;organized&rdquo;. Finally we copy the new vertex positions into <code>Vertex::position</code>.</p>
-<h3 id="how-meshes-behave-after-loop-subdivision">How meshes behave after loop subdivision?</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">
+</p>
+<h3 id="sample-results-on-the-test-set-with-pure-noise">Sample results on the test set with pure noise</h3>
+<p>
 
 
 
@@ -1215,10 +1039,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/EcgSYzGNr3Aho2j.png" alt="6-1.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/13/2v94YdzxhlALSi7.png" alt="fig8.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-<th style="text-align:center">
+</p>
+<h3 id="average-image-of-the-training-set">Average image of the training set</h3>
+<p>
 
 
 
@@ -1236,14 +1061,13 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/cMblmfDSrW1AyGE.png" alt="6-2.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/13/kI5rCa3uQsLbUoR.png" alt="fig9.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">
+
+The average MNIST image is blurry and lacks clear digits, showing general intensity distributions. The denoised results, however, retain distinct shapes, indicating that it is doing denoising.</p>
+<h2 id="part-2-training-a-flow-matching-model">Part 2: Training a Flow Matching Model</h2>
+<h3 id="training-loss-curve-plot-for-the-time-conditioned-unet-over-the-whole-training-process">Training loss curve plot for the time-conditioned UNet over the whole training process</h3>
+<p>
 
 
 
@@ -1261,10 +1085,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/pxUJqVXGBuF6vYh.png" alt="6-3.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/HaQGujkX1vgocIb.png" alt="fig10_tunet.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</td>
-<td style="text-align:center">
+</p>
+<h3 id="sampling-results-for-the-time-conditioned-unet-for-5-and-10-epochs">Sampling results for the time-conditioned UNet for 5 and 10 epochs</h3>
+<p>
 
 
 
@@ -1282,48 +1107,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/nyoKM7lk3mDSjJF.png" alt="6-4.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/JPRa2lU9YkINCFo.png" alt="tunet_sample.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Meshes becomes &ldquo;smoothed out&rdquo; after multiple times of loop subdivisions. Sharp edges and corners become more rounded and less sharper than before.</p>
-<p>Yes, pre-splitting some edges works. Loop subdivision applies a weighted averaging scheme when repositioning vertices. If edges are closely spaced(i.e. pre-splitting to make edges closely spaced / evenly spaced), the averaging effect is localized rather than spread out over a large area, reducing the smoothing effect.</p>
-<h3 id="the-asymmetric-cube">The Asymmetric Cube</h3>
-<p>Asymmetry appears after multiple iterations, despite the cube starting with a symmetric structure. This happens due to the cube&rsquo;s original topology, where each face consists of two triangles (not four evenly distributed ones).</p>
-<p>Loop subdivision refines each triangle individually, meaning that if some edges are longer or unevenly split, the algorithm treats them differently and there&rsquo;s asymmetric. The cube&rsquo;s initial triangulation pattern isn&rsquo;t perfectly symmetrical, leading to small &ldquo;drifts&rdquo; after each iteration.</p>
-<p>So, by pre-splitting the cube by adding a &ldquo;cut&rdquo; to each surface(formed by 2 triangles/faces), we are able to get a balanced cube. Because every surface are pre-splitted to be exactly the same and symmetrical, so after subdivision, they still remain the same shape and still be symmetrical on same directions.</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  id="figure-the-pre-split-cube">
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/nO1Lz28iMFSTbZG.png" alt="The pre-split cube" loading="lazy" data-zoomable /></div>
-  </div><figcaption>
-      The pre-split cube
-    </figcaption></figure>
-
-<p>Here is a comparison between original cube and the pre-splitted cube after 4 times of subdivisions.(Left: og. Right: pre-splitted.)</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">
+</p>
+<h3 id="training-loss-curve-plot-for-the-class-conditioned-unet-over-the-whole-training-process">Training loss curve plot for the class-conditioned UNet over the whole training process</h3>
+<p>
 
 
 
@@ -1341,10 +1129,11 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/nyoKM7lk3mDSjJF.png" alt="6-4.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/dxosKPJYICX9Tki.png" alt="fig10_cunet.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-<th style="text-align:center">
+</p>
+<h3 id="sampling-results-for-the-class-conditioned-unet-for-5-and-10-epochs">Sampling results for the class-conditioned UNet for 5 and 10 epochs</h3>
+<p>
 
 
 
@@ -1362,12 +1151,9 @@ The new points generated is the one-step result of all the original points.</p>
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/01/FAwiQjGgW4HKBJP.png" alt="6-comparison.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/62mLjKZDs7nkih5.png" alt="cunet_sample.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</th>
-</tr>
-</thead>
-</table>
+</p>
 
     </div>
 
@@ -1394,7 +1180,7 @@ The new points generated is the one-step result of all the original points.</p>
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj2%2F&amp;text=COMPSCI&#43;184&#43;Project2%3A&#43;Geometric&#43;Modeling" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;text=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -1411,7 +1197,7 @@ The new points generated is the one-step result of all the original points.</p>
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj2%2F&amp;t=COMPSCI&#43;184&#43;Project2%3A&#43;Geometric&#43;Modeling" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;t=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -1430,7 +1216,7 @@ The new points generated is the one-step result of all the original points.</p>
         
       
       <li>
-        <a href="mailto:?subject=COMPSCI%20184%20Project2%3A%20Geometric%20Modeling&amp;body=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj2%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=COMPSCI%20280%20Project2%3A%20Flow%20Matching&amp;body=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -1447,7 +1233,7 @@ The new points generated is the one-step result of all the original points.</p>
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj2%2F&amp;title=COMPSCI&#43;184&#43;Project2%3A&#43;Geometric&#43;Modeling" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;title=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -1464,7 +1250,7 @@ The new points generated is the one-step result of all the original points.</p>
       
       
       <li>
-        <a href="whatsapp://send?text=COMPSCI&#43;184&#43;Project2%3A&#43;Geometric&#43;Modeling%20https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj2%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching%20https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1481,7 +1267,7 @@ The new points generated is the one-step result of all the original points.</p>
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj2%2F&amp;title=COMPSCI&#43;184&#43;Project2%3A&#43;Geometric&#43;Modeling" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;title=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

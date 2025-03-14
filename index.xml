@@ -33,6 +33,303 @@
     </item>
     
     <item>
+      <title>COMPSCI 280 Project2: Flow Matching</title>
+      <link>https://alt-js.github.io/post/280pj2/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/280pj2/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;You will train your own flow matching model on MNIST.&lt;/p&gt;
+&lt;h2 id=&#34;part-1-training-a-single-step-denoising-unet&#34;&gt;Part 1: Training a Single-Step Denoising UNet&lt;/h2&gt;
+&lt;h3 id=&#34;unconditioned-unet-architecture&#34;&gt;Unconditioned UNet architecture&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://cal-cs180.github.io/fa24/hw/proj5/assets/unconditional_arch.png&#34; alt=&#34;fig1&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://cal-cs180.github.io/fa24/hw/proj5/assets/atomic_ops_new.png&#34; alt=&#34;fig2&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;visualization-of-the-noising-process&#34;&gt;Visualization of the noising process&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/VapRt2jWhLcIC5m.png&#34; alt=&#34;fig3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;training-loss-curve&#34;&gt;Training loss curve&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/Xo6LJGaAh3bKsNF.png&#34; alt=&#34;fig4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;sample-results-on-the-test-set-after-the-first-and-the-5-th-epoch&#34;&gt;Sample results on the test set after the first and the 5-th epoch&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/1JgCnLkd5ZFaTeu.png&#34; alt=&#34;fig5.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/7K12zJM4ox6Icm8.png&#34; alt=&#34;fig6.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;sample-results-on-the-test-set-with-out-of-distribution-noise-levels-after-the-model-is-trained&#34;&gt;Sample results on the test set with out-of-distribution noise levels after the model is trained.&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/13/tzSuKb4QPysqL7A.png&#34; alt=&#34;fig7.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;sample-results-on-the-test-set-with-pure-noise&#34;&gt;Sample results on the test set with pure noise&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/13/2v94YdzxhlALSi7.png&#34; alt=&#34;fig8.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;average-image-of-the-training-set&#34;&gt;Average image of the training set&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/13/kI5rCa3uQsLbUoR.png&#34; alt=&#34;fig9.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+The average MNIST image is blurry and lacks clear digits, showing general intensity distributions. The denoised results, however, retain distinct shapes, indicating that it is doing denoising.&lt;/p&gt;
+&lt;h2 id=&#34;part-2-training-a-flow-matching-model&#34;&gt;Part 2: Training a Flow Matching Model&lt;/h2&gt;
+&lt;h3 id=&#34;training-loss-curve-plot-for-the-time-conditioned-unet-over-the-whole-training-process&#34;&gt;Training loss curve plot for the time-conditioned UNet over the whole training process&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/HaQGujkX1vgocIb.png&#34; alt=&#34;fig10_tunet.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;sampling-results-for-the-time-conditioned-unet-for-5-and-10-epochs&#34;&gt;Sampling results for the time-conditioned UNet for 5 and 10 epochs&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/JPRa2lU9YkINCFo.png&#34; alt=&#34;tunet_sample.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;training-loss-curve-plot-for-the-class-conditioned-unet-over-the-whole-training-process&#34;&gt;Training loss curve plot for the class-conditioned UNet over the whole training process&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/dxosKPJYICX9Tki.png&#34; alt=&#34;fig10_cunet.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;sampling-results-for-the-class-conditioned-unet-for-5-and-10-epochs&#34;&gt;Sampling results for the class-conditioned UNet for 5 and 10 epochs&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/14/62mLjKZDs7nkih5.png&#34; alt=&#34;cunet_sample.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>COMPSCI 184 Project2: Geometric Modeling</title>
       <link>https://alt-js.github.io/post/184pj2/</link>
       <pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate>
