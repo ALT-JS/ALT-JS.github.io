@@ -330,6 +330,1036 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
     </item>
     
     <item>
+      <title>COMPSCI 184 Project3: PathTracer</title>
+      <link>https://alt-js.github.io/post/184pj3/</link>
+      <pubDate>Tue, 04 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/184pj3/</guid>
+      <description>&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/eHbOGFcswjBzxDa.png&#34; alt=&#34;dragon_64_32.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;part-0-project-overview&#34;&gt;Part 0: Project overview&lt;/h2&gt;
+&lt;p&gt;In this project, I implemented some fundamental functions and features of a physically-based renderer using path tracing algorithm. First, I implemented ray generation and the intersection between ray and objects/scene. Next, I implemented the BVH splitting and intersection detection. Then, I implemented direct illumination(zero/one bounce lights) and global illumination(multi-bounce lights w/ w/o russian roullete) to actually render the whole scene with path tracing. Finally, I implemented adaptive sampling to reduce the noise of monte carlo path tracing.&lt;/p&gt;
+&lt;h2 id=&#34;part-1-ray-generation-and-scene-intersection&#34;&gt;Part 1: Ray Generation and Scene Intersection&lt;/h2&gt;
+&lt;h3 id=&#34;ray-generation-walkthrough--primitive-intersection-pipeline&#34;&gt;Ray generation walkthrough &amp;amp; primitive intersection pipeline&lt;/h3&gt;
+&lt;p&gt;I first calculate the bottom left and the top right corner of the sensor/image space coordinates, which helps me to determine the coordinates in the camera space with left multiplcation of the &lt;code&gt;c2w&lt;/code&gt; matrix. Then with the origin &lt;code&gt;pos&lt;/code&gt; and the previously calculated coord as &lt;code&gt;direction&lt;/code&gt; vector(since the origin is [0,0,0] and it&amp;rsquo;s numerically the same for the coords and the vector), we can generate the correct ray.&lt;/p&gt;
+&lt;p&gt;Primitive is the bridge between geometry processing and the shading subsystem. It contains all the things including &lt;code&gt;bbox&lt;/code&gt;, &lt;code&gt;intersect&lt;/code&gt;, &lt;code&gt;has_intersection&lt;/code&gt; and &lt;code&gt;bsdf&lt;/code&gt;. For intersections, we use &lt;code&gt;has_intersection&lt;/code&gt; to determine whether it&amp;rsquo;s intersected or not and use &lt;code&gt;intersect&lt;/code&gt; to actually change the intersection distance, the normal vector, and the bsdf.&lt;/p&gt;
+&lt;h3 id=&#34;triangle-intersection-algorithm-walkthrough&#34;&gt;Triangle intersection algorithm walkthrough&lt;/h3&gt;
+&lt;p&gt;For the &lt;code&gt;intersect&lt;/code&gt; and &lt;code&gt;has_intersection&lt;/code&gt;, I used the Moller-Trumbore algorithm to compute them. We compute two edges of the triangle. Compute the determinant &lt;code&gt;det&lt;/code&gt; to check if the ray is nearly parallel. Compute u and v(barycentric coordinates) to ensure the intersection lies within the triangle. Compute t, the intersection distance along the ray. And finally check if t is within the ray&amp;rsquo;s valid range (min_t to max_t). The function &lt;code&gt;intersect&lt;/code&gt; basically determine whether &lt;code&gt;has_intersection&lt;/code&gt; is true or not and change the primitives and the properties mentioned above(intersection distance, normal vector, bsdf).&lt;/p&gt;
+&lt;h3 id=&#34;some-results&#34;&gt;Some results&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/PSxngs9r1DGBQvh.png&#34; alt=&#34;1-CBspheres.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/ahoUQ67VMJ8Hnm5.png&#34; alt=&#34;1-cow.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;CB spheres&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;cow&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;part-2-bounding-volume-hierarchy&#34;&gt;Part 2: Bounding Volume Hierarchy&lt;/h2&gt;
+&lt;h3 id=&#34;bvh-construction-algorithm-walkthrough&#34;&gt;BVH construction algorithm walkthrough&lt;/h3&gt;
+&lt;p&gt;First, compute the bounding box (BBox) of all primitives in the given range [start, end). Then, I choose the best axis to split: compute the bounding box centroid for each primitive. Select the axis with the largest extent (X, Y, or Z) and split at the centroid median to achieve balanced partitions. The primitives are sorted first and partitioned into left and right subsets. Finally, recursively call function and construct BVH for left and right subsets and return the newly created BVHNode.&lt;/p&gt;
+&lt;h3 id=&#34;some-results-1&#34;&gt;Some results&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/hsbaMc4D8Z1iKzq.png&#34; alt=&#34;2-cblucy.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/h2aK4RpOl9yntiw.png&#34; alt=&#34;2-max.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;CB Lucy&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Max Planck&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;more-on-bvh-acceleration&#34;&gt;More on BVH acceleration&lt;/h3&gt;
+&lt;p&gt;First, here&amp;rsquo;s more result on the BVH rendering(left) and the comparison between the non-BVH. You can see that there&amp;rsquo;s basically no difference between them.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/L7pVYQdUeayEkjW.png&#34; alt=&#34;2-peter.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/sKw7S8VnQ9bU3k2.png&#34; alt=&#34;2slow-peter.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Peter w/ BVH&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Peter w/o BVH&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;But the rendering time, as shown in the picture below, have significant difference. One is 0.0653 second, and the other takes 166.5520 seconds to finish. Nearly 300x faster.&lt;/p&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/mGnP5FgaLyU4qWM.png&#34; alt=&#34;2-peterspeed.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;part-3-direct-illumination&#34;&gt;Part 3: Direct Illumination&lt;/h2&gt;
+&lt;h3 id=&#34;direct-lighting-functions-walkthrough&#34;&gt;Direct Lighting functions walkthrough&lt;/h3&gt;
+&lt;h4 id=&#34;uniform-hemisphere-sampling&#34;&gt;Uniform Hemisphere Sampling&lt;/h4&gt;
+&lt;p&gt;In the loop of &lt;code&gt;num_sample&lt;/code&gt; samples, we sample from &lt;code&gt;hemisphereSampler&lt;/code&gt;, then we create a new ray with in point &lt;code&gt;hit_p&lt;/code&gt; and the epsilon constant for avoiding numerical presision issues and direction sampled earlier. If the ray intersects we calculate the &lt;code&gt;L_out&lt;/code&gt; of the ray. Finally we divide the sum of all the things above with pdf and the &lt;code&gt;num_samples&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;importance-sampling-lights&#34;&gt;Importance Sampling Lights&lt;/h4&gt;
+&lt;p&gt;FOr importance sampling, we sample all the lights directly After we calculate the hit point &lt;code&gt;hit_p&lt;/code&gt;, we directly sample a light ray from it. If we cast a ray in this direction and there is no other object between the hit point and the light source, then we know that this light source does cast light onto the hit point. After the judge, we still do the same thing as above(divide the sum of all the things above with pdf and the &lt;code&gt;num_samples&lt;/code&gt;).&lt;/p&gt;
+&lt;h3 id=&#34;some-results-2&#34;&gt;Some results&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/dcW1BYZT6Jpvswl.png&#34; alt=&#34;3H-bunny_64_32.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/uhZSVJynjMpz6UK.png&#34; alt=&#34;3-bunny_64_32.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Hemisphere uniform sampling&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Direct importance sampling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/sbQr1iKAhxGZSg7.png&#34; alt=&#34;3H-dragon_32_16.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/olEq7FRBQMzStYb.png&#34; alt=&#34;3-dragon_32_16.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Hemisphere uniform sampling&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Direct importance sampling&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;direct-comparison&#34;&gt;Direct comparison&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/pd3KXycOaBsR8Eo.png&#34; alt=&#34;3-1-bunny_64_32.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/ORMdsz56EyBwQFS.png&#34; alt=&#34;3-4-bunny_64_32.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/wuqkp8aj7XcZ3PR.png&#34; alt=&#34;3-16-bunny_64_32.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/5exniCTFvOcGjm9.png&#34; alt=&#34;3-64-bunny_64_32.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Up 1 Down 16&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Up 4 Down 64&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;Uniform hemisphere sampling distributes samples evenly over the hemisphere, leading to significant variance in Monte Carlo integration when evaluating lighting contributions, especially in scenes with strong directional lighting. This results in more noise and slower convergence. In contrast, importance sampling strategically places more samples in directions where the light source contributes most to the radiance, reducing variance and improving efficiency. This method converges faster, producing smoother and more accurate results with fewer samples.&lt;/p&gt;
+&lt;h2 id=&#34;part-4-global-illumination&#34;&gt;Part 4: Global Illumination&lt;/h2&gt;
+&lt;h3 id=&#34;indirect-lighting-function-walkthough&#34;&gt;Indirect lighting function walkthough&lt;/h3&gt;
+&lt;p&gt;We get the one bounce radiance first, then, we sample a new f using the outgoing direction of the last ray. We create new ray and increase its depth by 1. When the depth reaches the max depth, just return the one bounce result earlier(this is the last one being calculated), otherwise recursively calling the function.&lt;/p&gt;
+&lt;p&gt;As for russian roulette, the difference is that every new ray generated each turn has to pass the russian roulette coin flip check in order to not be eliminated and thrown away. The probability I&amp;rsquo;m using here is 70% continue, 30% delete each turn.&lt;/p&gt;
+&lt;h3 id=&#34;some-global-illumination-results&#34;&gt;Some global illumination results&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/D4Ye7gfVZy5TcUq.png&#34; alt=&#34;4-bunny_1024_8_2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/bfBkY6LQGyCnXAZ.png&#34; alt=&#34;4-spheres_1024_8_4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Bunny (maxdepth=2)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Spheres (maxdepth=4)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;only-direct-illumination-vs-only-indirect-illumination&#34;&gt;Only direct illumination vs. only indirect illumination&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/17/QzaAcpTOljU9CMK.png&#34; alt=&#34;4-spheres_1024_8_1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/4fCLUGcaYm8dwqI.png&#34; alt=&#34;4-spheres_1024_8_2onlyi.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;only direct illumination&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;only indirect illumination (maxdepth=2)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;renders-of-max_ray_depth-from-0-to-5&#34;&gt;Renders of &lt;code&gt;max_ray_depth&lt;/code&gt; from 0 to 5&lt;/h3&gt;
+&lt;p&gt;specs using: &lt;code&gt;-t 12 -s 1024 -l 8 -r 480 360&lt;/code&gt;, click the image to zoom in on the website.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;isAccumBounces&lt;/th&gt;
+&lt;th&gt;m = 0&lt;/th&gt;
+&lt;th&gt;m = 1&lt;/th&gt;
+&lt;th&gt;m = 2&lt;/th&gt;
+&lt;th&gt;m = 3&lt;/th&gt;
+&lt;th&gt;m = 4&lt;/th&gt;
+&lt;th&gt;m = 5&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;false&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/cGERHpAguQeCFLI.png&#34; alt=&#34;CB_Bunny_0.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/IYqgA2rjBJsduiV.png&#34; alt=&#34;CB_Bunny_1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/OnDZbmFq9UihCgL.png&#34; alt=&#34;CB_Bunny_2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/sqfh6ZUnmKetLET.png&#34; alt=&#34;CB_Bunny_3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/r1iAbHDxV48nmp3.png&#34; alt=&#34;CB_Bunny_4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/8X7aYmyHVGTpEQs.png&#34; alt=&#34;CB_Bunny_5.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;true&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/bvizX7BDAYJN89T.png&#34; alt=&#34;CB_Bunny_cumsum_0.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/VjzShtWMLb7gIQy.png&#34; alt=&#34;CB_Bunny_cumsum_1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/3WxsAPvbGEq6HNL.png&#34; alt=&#34;CB_Bunny_cumsum_2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/LeQf9sqC3vta2hG.png&#34; alt=&#34;CB_Bunny_cumsum_3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/epknVAIzZwdN2Ly.png&#34; alt=&#34;CB_Bunny_cumsum_4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/ts5jVlDz1NhGSZF.png&#34; alt=&#34;CB_Bunny_cumsum_5.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;the-2nd-and-3rd-bounce-of-light&#34;&gt;the 2nd and 3rd bounce of light&lt;/h4&gt;
+&lt;p&gt;For the 2nd bounce of the light, its main contribution is that it illuminates the ceiling, making the overall rasterization way more realistic. For the third bounce of light, it slightly illuminates the ground around the bunny, mimicing the lights reflected away from the bunny surface, making the overall rasterization more realistic.&lt;/p&gt;
+&lt;h3 id=&#34;russian-roulette-rendering-results&#34;&gt;Russian roulette rendering results&lt;/h3&gt;
+&lt;p&gt;specs using: &lt;code&gt;-s 1024 -l 4&lt;/code&gt;. Along with using russian soulette, you may not be able to see that much difference after 2 bounce.&lt;/p&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
+    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+    &lt;title&gt;Flexbox&lt;/title&gt;
+    &lt;style&gt;
+        .container1 {
+            display: flex;
+            justify-content: space-between; /* 图片之间有间距 */
+            align-items: center;
+            gap: 10px; /* 图片间距 */
+        }
+        .container1 img {
+            width: 100px; /* 设定图片宽度 */
+            height: auto; /* 保持宽高比 */
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&#34;container1&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/ter3DLVmPMNxOHU.png&#34; alt=&#34;图片1&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/4bXiQIOSD6k2h9G.png&#34; alt=&#34;图片2&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/f2LITNAPtaVv6QO.png&#34; alt=&#34;图片3&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/y4ZuJkjoRhrLM5e.png&#34; alt=&#34;图片4&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/8PTfcBJsKSzVAYa.png&#34; alt=&#34;图片5&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/ys6JOa3PBA4E7Zo.png&#34; alt=&#34;图片5&#34;&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;h3 id=&#34;various-sample-per-pixel-rates-results&#34;&gt;Various sample-per-pixel rates results&lt;/h3&gt;
+&lt;p&gt;From left to right, from top to bottom: 1 2 4 8 16 64 1024.&lt;/p&gt;
+&lt;head&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
+    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+    &lt;title&gt;Flexbox&lt;/title&gt;
+    &lt;style&gt;
+        .container2 {
+            display: flex;
+            justify-content: space-between; /* 图片之间有间距 */
+            align-items: center;
+            gap: 10px; /* 图片间距 */
+        }
+        .container2 img {
+            width: 150px; /* 设定图片宽度 */
+            height: auto; /* 保持宽高比 */
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&#34;container2&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/fHB89v74NbV1RAe.png&#34; alt=&#34;图片1&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/a7iHhyqIOwczQ3C.png&#34; alt=&#34;图片2&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/IZNlfs51XEhi8Pe.png&#34; alt=&#34;图片3&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/DGeFtJuWlV6I9Sd.png&#34; alt=&#34;图片4&#34;&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;head&gt;
+    &lt;meta charset=&#34;UTF-8&#34;&gt;
+    &lt;meta name=&#34;viewport&#34; content=&#34;width=device-width, initial-scale=1.0&#34;&gt;
+    &lt;title&gt;Flexbox&lt;/title&gt;
+    &lt;style&gt;
+        .container3 {
+            display: flex;
+            justify-content: space-between; /* 图片之间有间距 */
+            align-items: center;
+            gap: 10px; /* 图片间距 */
+        }
+        .container3 img {
+            width: 200px; /* 设定图片宽度 */
+            height: auto; /* 保持宽高比 */
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class=&#34;container3&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/tdysICTwuG6kzU1.png&#34; alt=&#34;图片1&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/gn7KfalOB6sDwiJ.png&#34; alt=&#34;图片2&#34;&gt;
+        &lt;img src=&#34;https://s2.loli.net/2025/03/18/nhL8oIT5qeFlKXN.png&#34; alt=&#34;图片3&#34;&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;h2 id=&#34;part-5-adaptive-sampling&#34;&gt;Part 5: Adaptive Sampling&lt;/h2&gt;
+&lt;h3 id=&#34;adaptive-sampling-walkthrough&#34;&gt;Adaptive sampling walkthrough&lt;/h3&gt;
+&lt;p&gt;Adaptive sampling is a method used in ray tracing to reduce the number of samples per pixel while maintaining image quality. Instead of taking a fixed number of samples (ns_aa), it dynamically decides when to stop sampling based on statistical analysis.&lt;/p&gt;
+&lt;p&gt;(If only one sample is requested, the algorithm traces a single ray and directly stores the computed radiance.) We loop over &lt;code&gt;ns_aa&lt;/code&gt; samples, and only check after every &lt;code&gt;samplesPerBatch&lt;/code&gt; samples. Then we calculate and check confidence interval &lt;code&gt;I&lt;/code&gt; is smaller or larger than a threshold, if smaller then it stops early. otherwise just like ordinary calculation. Once sampling is complete (either because the pixel converged or the maximum samples were taken), the final radiance is computed as the average of all collected samples.&lt;/p&gt;
+&lt;h3 id=&#34;some-results-3&#34;&gt;Some results&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/SIEatGOiRCykVZY.png&#34; alt=&#34;5-bunny.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/Jy58qPUbscnmpvN.png&#34; alt=&#34;5-bunnyrate.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;bunny&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;bunnyrate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/hwvjBs8Wyx4Dk2G.png&#34; alt=&#34;5-ball.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/03/18/3SGViozB81c6rlH.png&#34; alt=&#34;5-ballrate.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;ball&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;ballrate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
       <title>COMPSCI 184 Project2: Geometric Modeling</title>
       <link>https://alt-js.github.io/post/184pj2/</link>
       <pubDate>Tue, 18 Feb 2025 00:00:00 +0000</pubDate>
@@ -864,6 +1894,9 @@ The new points generated is the one-step result of all the original points.&lt;/
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj2/&#34;&gt;Project 2: Geometric Modeling&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj3/&#34;&gt;Project 3: PathTracer&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 </description>
