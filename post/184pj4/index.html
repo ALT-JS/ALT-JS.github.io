@@ -1,0 +1,2452 @@
+<!DOCTYPE html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: April 5, 2025 --><html lang="en-us" >
+
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Hugo Blox Builder 5.9.7" />
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.26c458e6907dc03073573976b7f4044e.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css" integrity="sha512-IW0nhlW5MgNydsXJO40En2EoCkTTjZhI3yuODrZIc8cQ4h1XcF53PsqDHa09NqnkXuIe0Oiyyj171BqZFwISBw==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.f6689966c0a10712f95f034011917db0.css" />
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="/css/libs/chroma/github-light.min.css" title="hl-light" media="print" onload="this.media='all'" >
+    <link rel="stylesheet" href="/css/libs/chroma/dracula.min.css" title="hl-dark" media="print" onload="this.media='all'" disabled>
+  
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+
+
+
+
+
+  <meta name="author" content="Jiashen Du" />
+
+
+
+
+
+  
+
+<meta name="description" content="Part 0: Project overview In this project, I&rsquo;ve implemented a real-time simulation of cloth using a mass and spring based system. Started out with masses and springs, I build grid of point masses and implemented 3 type of constraints(structual, shearing and bending) presented as strings between the point masses." />
+
+
+
+<link rel="alternate" hreflang="en-us" href="https://alt-js.github.io/post/184pj4/" />
+<link rel="canonical" href="https://alt-js.github.io/post/184pj4/" />
+
+
+
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+
+
+<link rel="icon" type="image/png" href="/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_32x32_fill_lanczos_center_3.png" />
+<link rel="apple-touch-icon" type="image/png" href="/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_180x180_fill_lanczos_center_3.png" />
+
+<meta name="theme-color" content="#1565c0" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+<meta property="twitter:card" content="summary" />
+
+  <meta property="twitter:site" content="@GetResearchDev" />
+  <meta property="twitter:creator" content="@GetResearchDev" />
+<meta property="twitter:image" content="https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png" />
+
+
+
+  
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="JiashenDu Homepage" />
+<meta property="og:url" content="https://alt-js.github.io/post/184pj4/" />
+<meta property="og:title" content="COMPSCI 184 Project4: ClothSim | JiashenDu Homepage" />
+<meta property="og:description" content="Part 0: Project overview In this project, I&rsquo;ve implemented a real-time simulation of cloth using a mass and spring based system. Started out with masses and springs, I build grid of point masses and implemented 3 type of constraints(structual, shearing and bending) presented as strings between the point masses." /><meta property="og:image" content="https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+
+  
+    <meta
+      property="article:published_time"
+      content="2025-03-18T00:00:00&#43;00:00"
+    />
+  
+  
+    <meta property="article:modified_time" content="2025-03-18T00:00:00&#43;00:00">
+  
+
+
+
+
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://alt-js.github.io/post/184pj4/"
+  },
+  "headline": "COMPSCI 184 Project4: ClothSim",
+  
+  "datePublished": "2025-03-18T00:00:00Z",
+  "dateModified": "2025-03-18T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Jiashen Du"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "JiashenDu Homepage",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_192x192_fill_lanczos_center_3.png"
+    }
+  },
+  "description": "Part 0: Project overview In this project, I\u0026rsquo;ve implemented a real-time simulation of cloth using a mass and spring based system. Started out with masses and springs, I build grid of point masses and implemented 3 type of constraints(structual, shearing and bending) presented as strings between the point masses."
+}
+</script>
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+  
+
+  
+
+
+  
+  <title>COMPSCI 184 Project4: ClothSim | JiashenDu Homepage</title>
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="fbdfd643ee680c26bbb3a6458e7a73d2" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.9e4214442a7711d35691acd58f6f6361.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header header--fixed">
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">JiashenDu Homepage</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+      
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">JiashenDu Homepage</a>
+      </div>
+      
+
+      
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Home</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://twitter.com/altjasonspeed" data-toggle="tooltip" data-placement="bottom" title="Follow me on Twitter" target="_blank" rel="noopener" aria-label="Follow me on Twitter">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
+      </ul>
+
+    </div>
+  </nav>
+</header>
+
+
+  </div>
+
+  <div class="page-body">
+    
+    
+    
+
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>COMPSCI 184 Project4: ClothSim</h1>
+
+  
+  <p class="page-subtitle">a real-time simulation of cloth using a mass and spring based system</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Mar 18, 2025
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="part-0-project-overview">Part 0: Project overview</h2>
+<p>In this project, I&rsquo;ve implemented a real-time simulation of cloth using a mass and spring based system. Started out with masses and springs, I build grid of point masses and implemented 3 type of constraints(structual, shearing and bending) presented as strings between the point masses. Next, I implemented easy simulation with classic Newton&rsquo;s law F = ma, Hooke&rsquo;s law for forces on masses, verlet integration for new point mass positions and Provot&rsquo;s study to ensure spring’s length is at most 10% greater than its <code>rest_length</code> at the end of any time step. Then it&rsquo;s the collision handling with spheres and flat surfaces. Followed with self-collision handling which makes the falling fabric more realistic so that it won&rsquo;t overlap unnaturally. Finally, I use GLSL to implement a lot of different vertex shaders and fragment shaders: diffuse shading, blinn-phong shading, texture mapping, bump mapping, displacement mapping and mirror-like environment-mapped reflection.</p>
+<h2 id="part-1-masses-and-springs">Part 1: Masses and springs</h2>
+<h3 id="some-screenshots-of-scenepinned2json">Some screenshots of <code>scene/pinned2.json</code></h3>
+<p>You can also treat the picture w/ all constraints below as the third view.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/215ldLmxnXsfibC.png" alt="1-1-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/vLzrByYgEcFb23j.png" alt="1-1-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">View 1</td>
+<td style="text-align:center">View 2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-wireframe-screenshots">The wireframe screenshots</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/wqOYRpJmDEfknsr.png" alt="1-2-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/4aYcWV2ZCKPwNvR.png" alt="1-2-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/kC4spg9feZozAqI.png" alt="1-2-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">w/ all constraints</td>
+<td style="text-align:center">w/o shearing</td>
+<td style="text-align:center">w/ only shearing</td>
+</tr>
+</tbody>
+</table>
+<h2 id="part-2-simulation-via-numerical-integration">Part 2: Simulation via numerical integration</h2>
+<h3 id="experiments-with-some-the-parameters-in-the-simulation">Experiments with some the parameters in the simulation</h3>
+<h4 id="spring-constant-ks">Spring constant <code>ks</code></h4>
+<p>When the <code>ks</code> is very small, the cloth behaves very &ldquo;loose&rdquo; and tiny little force will make the whole cloth moves and &ldquo;shivers&rdquo;. When the <code>ks</code> is very big, the cloth behaves very &ldquo;tight&rdquo; and sags less than smaller <code>ks</code>, the whole cloth will reach to a stop faster than smaller <code>ks</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/6JRKixjeml2TrCu.png" alt="2-1-1-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/XHTtclnERh2UK7p.png" alt="2-1-1-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>ks</code> = 50000</td>
+<td style="text-align:center"><code>ks</code> = 5</td>
+</tr>
+</tbody>
+</table>
+<h4 id="density">Density</h4>
+<p>With higher density, the cloth sags more than lower density when at full stop, also, I noticed that when they are dropping down, higher the density, slower the speed, and also the deformation in the middle of the cloth is bigger. This is because the density cause the point mass to be heavier/lighter.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/g3rLvHh8Okt9cxR.png" alt="2-1-2-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/ai2uZwXFcqyNKrY.png" alt="2-1-2-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/9aOSn3HQV8iNdKJ.png" alt="2-1-2-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>density</code> = 100</td>
+<td style="text-align:center">og <code>density</code></td>
+<td style="text-align:center"><code>density</code> = 1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="damping">Damping</h3>
+<p>Bigger damping value results in much stable movement when falling down, which indicates that the delta of point masses location doesn&rsquo;t change dramatically. From the picture, very low damping value results in the cloth behaves jumping around actively, whereas higher damping value initially controls the cloth movement and then even the sagging speed is lower.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/sR5v4x3A82d6TND.png" alt="2-1-3-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/ZAILVijTPWM592k.png" alt="2-1-3-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">big <code>damping</code> value</td>
+<td style="text-align:center">super small <code>damping</code> value</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scenepinned4json-results"><code>scene/pinned4.json</code> results</h3>
+<p>All default.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/04/AUt2nq1DMR38fQy.png" alt="2-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<h2 id="part-3-handling-collisions-with-other-objects">Part 3: Handling collisions with other objects</h2>
+<h3 id="implementation-of-collisions">Implementation of collisions</h3>
+<h4 id="sphere-collisions">Sphere collisions</h4>
+<p>I first calculate the distance between the pointmass and origin of the sphere&rsquo;s surface, if it&rsquo;s landing on it then we just return, if not, I compute the correction vector from the tangent (<code>origin + (dir / dist) * radius</code>) minus last position, scaled down by friction.</p>
+<h4 id="plane-collisions">Plane collisions</h4>
+<p>The function first computes the signed distances of the point mass&rsquo;s last and current positions from the plane by taking the dot product of the difference between the positions and a reference point on the plane with the plane&rsquo;s normal. If the product of these distances is negative, it indicates that the point mass has crossed the plane. The function then calculates the fraction along the point mass&rsquo;s trajectory where the collision occurs and determines the exact collision point (referred to as &ldquo;tangent&rdquo;) on the plane. Depending on whether the point mass was above or below the plane, it adjusts the collision point by a small offset to avoid numerical issues. Finally, it computes a correction vector that accounts for friction, updating the point mass&rsquo;s position so that it lies on or near the plane after the collision.</p>
+<h3 id="scenespherejson-results"><code>scene/sphere.json</code> results</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/IbWiJdGH2ukl9tT.png" alt="3-2-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/tUvQ6sYWhTZxPe7.png" alt="3-2-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/bn75WBKiOlXAgdv.png" alt="3-2-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>ks</code> = 500</td>
+<td style="text-align:center">og <code>ks</code>(<code>ks</code> = 5000)</td>
+<td style="text-align:center"><code>ks</code> = 50000</td>
+</tr>
+</tbody>
+</table>
+<p>The higher the <code>ks</code>, the cloth seems more &ldquo;extended&rdquo; and harder to deform, which matches what <code>ks</code> contributes to the property of the cloth.</p>
+<h3 id="cloth-on-plane-result">Cloth on plane result</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/l6SYxOJ9bV8qHpj.png" alt="3-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</p>
+<h2 id="part-4-handling-self-collisions">Part 4: Handling self-collisions</h2>
+<h3 id="implementation-of-self-coliision">Implementation of self-coliision</h3>
+<p>To implement self-collision for the cloth, I used a spatial hashing approach to efficiently detect and resolve collisions between point masses. First, the <code>build_spatial_map</code> function creates a spatial map by iterating over all point masses and hashing their positions into discrete grid cells using the <code>hash_position</code> function, which computes a unique float identifier for each 3D box volume based on the cloth dimensions. Then, in the <code>self_collide</code> function, for a given point mass, I retrieve nearby candidate point masses from the spatial map (i.e., those that share the same hash key). For each candidate (excluding the point mass itself), I calculate the distance between their positions; if it is less than twice the cloth thickness, I compute a corrective displacement vector to push them apart. The average of these correction vectors, scaled by the simulation step size, is then added to the point mass’s position, effectively resolving the self-collision.</p>
+<h3 id="self-collision-at-different-time">Self-collision at different time</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/ZA2kTGuvW74jbE6.png" alt="4-2-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/1xPNJ9CA5zIUs7u.png" alt="4-2-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/vaDemBTCKixV1Ib.png" alt="4-2-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">early stage</td>
+<td style="text-align:center">middle stage</td>
+<td style="text-align:center">near final stage</td>
+</tr>
+</tbody>
+</table>
+<h3 id="varied-density-and-ks">Varied <code>density</code> and <code>ks</code></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/mRgIblpESi8ry1w.png" alt="4-3-1-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/vdAn2seEBlFZoNp.png" alt="4-3-1-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">og <code>ks</code>(<code>ks</code> = 5000)</td>
+<td style="text-align:center"><code>ks</code> = 50000</td>
+</tr>
+</tbody>
+</table>
+<p>Smaller <code>ks</code> makes the cloth &ldquo;softer&rdquo; and there will be more overlapping and creases when cloth falls on itself.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/mRgIblpESi8ry1w.png" alt="4-3-1-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/Xuk2NDYpP7vEFfs.png" alt="4-3-2-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">og <code>density</code>(15)</td>
+<td style="text-align:center"><code>density</code> = 5</td>
+</tr>
+</tbody>
+</table>
+<p>Smaller <code>density</code> makes the cloth more smooth and &ldquo;flat&rdquo; when it falls on itself. (Because smaller density causes smaller pointmass weight and individual pointmass won&rsquo;t fall into the cloth that easily.)</p>
+<h2 id="part-5-shaders">Part 5: Shaders</h2>
+<h3 id="shader-program-vertex--fragment-shaders">Shader program, vertex &amp; fragment shaders</h3>
+<p>A shader program is a set of instructions that runs on the GPU to determine how graphics are rendered on the screen. It typically includes different types of shaders, such as vertex and fragment shaders, that work together to produce the final image.</p>
+<p>The vertex shader is the first stage in the rendering pipeline. It processes each vertex of a 3D model, transforming its position from object space into screen space. It can also compute additional data like normals, texture coordinates, and lighting information per vertex.</p>
+<p>The fragment shader comes later in the pipeline and operates on each pixel (or fragment) that results from the rasterization of the transformed vertices. It takes the interpolated data produced by the vertex shader and uses it to determine the final color of each pixel by applying textures, lighting models, and material properties. By combining the computations from both shaders, a shader program creates realistic lighting and material effects, making objects appear as if they interact with light in a lifelike manner.</p>
+<h3 id="the-blinn-phong-shading-model">The Blinn-Phong shading model</h3>
+<p>The Blinn-Phong shading model breaks down the lighting into three main components: ambient light(the constant, background light in a scene that uniformly illuminates all surfaces), diffuse reflection(models how light scatters off a rough surface, depending on the angle between the surface normal and the light direction) and specular reflection.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/PHXxcq3ZALkysQB.png" alt="5-2-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/by3Ei9OIsZ4LrjP.png" alt="5-2-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">only ambient</td>
+<td style="text-align:center">only diffuse</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/sQ3AKiOpXZUCu8T.png" alt="5-2-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/aGrlcjIUQfvknRF.png" alt="5-2-4.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">only specular</td>
+<td style="text-align:center">entire Blinn-Phong</td>
+</tr>
+</tbody>
+</table>
+<h3 id="texture-mapping-shader">Texture mapping shader</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/NYV6xZpXhd15RUJ.png" alt="5-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/vYeS4capTL7PQEt.png" alt="5-3-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">render result</td>
+<td style="text-align:center">custom texture</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bump-mapping-and-displacement-mapping">Bump mapping and displacement mapping</h3>
+<h4 id="some-results">Some results</h4>
+<p>normal = 2, height = 1</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/MVHK96Gvrfq2IQW.png" alt="5-4-1-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/6mdcTl8AHZhXONj.png" alt="5-4-1-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">bump mapping cloth</td>
+<td style="text-align:center">bump mapping sphere</td>
+</tr>
+</tbody>
+</table>
+<p>normal = 100 and height = 0.02</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/bwCY69HpJRMLkao.png" alt="5-4-1-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/Y3GfbWqgvJaEFA7.png" alt="5-4-1-4.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">displacement mapping cloth</td>
+<td style="text-align:center">displacement mapping sphere</td>
+</tr>
+</tbody>
+</table>
+<h4 id="comparison">Comparison</h4>
+<p>Bump Mapping:
+Bump mapping simulates surface detail by perturbing the surface normals used in lighting calculations, which creates the illusion of texture without modifying the actual geometry. In the screenshots, the cloth shows subtle wrinkles and folds that enhance its fabric appearance, while the sphere exhibits texture detail (such as bumps or grooves) on its surface. However, since the underlying geometry remains unchanged, the silhouette and shadow edges of both objects are not affected by these details.</p>
+<p>Displacement Mapping:
+Displacement mapping, on the other hand, alters the actual geometry by moving vertices along the normal direction based on the texture’s intensity values. In the displacement mapping screenshot of the sphere, you can see more pronounced surface details that not only affect the shading but also modify the object&rsquo;s silhouette and the way shadows are cast. This results in a more realistic depiction of rough or uneven surfaces, at the cost of additional computational overhead.</p>
+<h4 id="sphere-mesh-coarseness-effect">Sphere mesh coarseness effect</h4>
+<p>Above: coarse(<code>-o 16 -a 16</code>), below: fine(<code>-o 128 -a 128</code>).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/q9Kwgi4L1Qr5zav.png" alt="5-4-3-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/ObvRm31YPCdyKfS.png" alt="5-4-3-3.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/tWcMwrvkTJjNxGb.png" alt="5-4-3-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</td>
+<td style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/au9LkxdCGsQYBpf.png" alt="5-4-3-4.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</td>
+</tr>
+<tr>
+<td style="text-align:center">bump mapping</td>
+<td style="text-align:center">displacement mapping</td>
+</tr>
+</tbody>
+</table>
+<p>The bump mapping behaves consistant from coarse to fine, and the displacement mapping sphere is more realistic when it&rsquo;s fine compared to coarse.</p>
+<h3 id="mirror-shader">Mirror shader</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/VaIdpc1bUlYE57T.png" alt="5-5-1.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+<th style="text-align:center">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/06/d2UEImafqR5xOoB.png" alt="5-5-2.png" loading="lazy" data-zoomable /></div>
+  </div></figure>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">mirror shader on cloth</td>
+<td style="text-align:center">mirror shader on sphere</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj4%2F&amp;text=COMPSCI&#43;184&#43;Project4%3A&#43;ClothSim" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj4%2F&amp;t=COMPSCI&#43;184&#43;Project4%3A&#43;ClothSim" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a href="mailto:?subject=COMPSCI%20184%20Project4%3A%20ClothSim&amp;body=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj4%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj4%2F&amp;title=COMPSCI&#43;184&#43;Project4%3A&#43;ClothSim" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=COMPSCI&#43;184&#43;Project4%3A&#43;ClothSim%20https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj4%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F184pj4%2F&amp;title=COMPSCI&#43;184&#43;Project4%3A&#43;ClothSim" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="https://alt-js.github.io/"><img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_hu85b2d0173a5493a6c7ab40679450830b_353166_270x270_fill_q75_lanczos_center.jpg" alt="Jiashen Du"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://alt-js.github.io/">Jiashen Du</a></h5>
+      <h6 class="card-subtitle">Undergrad Student major in CS</h6>
+      <p class="card-text">My research interests include Artificial Intelligence, Deep Learning, Computer Vision and LLMs.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/altjasonspeed" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/ALT-JS" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/uploads/resume.pdf" >
+        <i class="ai ai-cv"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by copyright-license-text">
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+
+
+<script src="/js/vendor-bundle.min.938a3a7554cd9f6602290411f64d2617.js"></script>
+
+
+
+
+  
+
+  
+  
+
+  
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+  
+  <script id="search-hit-fuse-template" type="text/x-template">
+    <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+
+  <script src="/js/wowchemy-headroom.db4755770454eb63685f8de785c0a172.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="/en/js/wowchemy.min.caa0dacbea0f9b8c446bff7a0438f4c8.js"></script>
+
+
+
+  <script src="/js/wowchemy-map.a26e9d2f7238ba5b868384f1c5bc6477.js" type="module"></script>
+
+
+
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <pre><code></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="/js/wowchemy-publication.9137013a66774049159934c29c3f0205.js" type="module"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

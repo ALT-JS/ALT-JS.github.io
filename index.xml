@@ -33,6 +33,1105 @@
     </item>
     
     <item>
+      <title>COMPSCI 184 Project4: ClothSim</title>
+      <link>https://alt-js.github.io/post/184pj4/</link>
+      <pubDate>Tue, 18 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/184pj4/</guid>
+      <description>&lt;h2 id=&#34;part-0-project-overview&#34;&gt;Part 0: Project overview&lt;/h2&gt;
+&lt;p&gt;In this project, I&amp;rsquo;ve implemented a real-time simulation of cloth using a mass and spring based system. Started out with masses and springs, I build grid of point masses and implemented 3 type of constraints(structual, shearing and bending) presented as strings between the point masses. Next, I implemented easy simulation with classic Newton&amp;rsquo;s law F = ma, Hooke&amp;rsquo;s law for forces on masses, verlet integration for new point mass positions and Provot&amp;rsquo;s study to ensure spring’s length is at most 10% greater than its &lt;code&gt;rest_length&lt;/code&gt; at the end of any time step. Then it&amp;rsquo;s the collision handling with spheres and flat surfaces. Followed with self-collision handling which makes the falling fabric more realistic so that it won&amp;rsquo;t overlap unnaturally. Finally, I use GLSL to implement a lot of different vertex shaders and fragment shaders: diffuse shading, blinn-phong shading, texture mapping, bump mapping, displacement mapping and mirror-like environment-mapped reflection.&lt;/p&gt;
+&lt;h2 id=&#34;part-1-masses-and-springs&#34;&gt;Part 1: Masses and springs&lt;/h2&gt;
+&lt;h3 id=&#34;some-screenshots-of-scenepinned2json&#34;&gt;Some screenshots of &lt;code&gt;scene/pinned2.json&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;You can also treat the picture w/ all constraints below as the third view.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/215ldLmxnXsfibC.png&#34; alt=&#34;1-1-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/vLzrByYgEcFb23j.png&#34; alt=&#34;1-1-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;View 1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;View 2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;the-wireframe-screenshots&#34;&gt;The wireframe screenshots&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/wqOYRpJmDEfknsr.png&#34; alt=&#34;1-2-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/4aYcWV2ZCKPwNvR.png&#34; alt=&#34;1-2-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/kC4spg9feZozAqI.png&#34; alt=&#34;1-2-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;w/ all constraints&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;w/o shearing&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;w/ only shearing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;part-2-simulation-via-numerical-integration&#34;&gt;Part 2: Simulation via numerical integration&lt;/h2&gt;
+&lt;h3 id=&#34;experiments-with-some-the-parameters-in-the-simulation&#34;&gt;Experiments with some the parameters in the simulation&lt;/h3&gt;
+&lt;h4 id=&#34;spring-constant-ks&#34;&gt;Spring constant &lt;code&gt;ks&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;When the &lt;code&gt;ks&lt;/code&gt; is very small, the cloth behaves very &amp;ldquo;loose&amp;rdquo; and tiny little force will make the whole cloth moves and &amp;ldquo;shivers&amp;rdquo;. When the &lt;code&gt;ks&lt;/code&gt; is very big, the cloth behaves very &amp;ldquo;tight&amp;rdquo; and sags less than smaller &lt;code&gt;ks&lt;/code&gt;, the whole cloth will reach to a stop faster than smaller &lt;code&gt;ks&lt;/code&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/6JRKixjeml2TrCu.png&#34; alt=&#34;2-1-1-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/XHTtclnERh2UK7p.png&#34; alt=&#34;2-1-1-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;ks&lt;/code&gt; = 50000&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;ks&lt;/code&gt; = 5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;density&#34;&gt;Density&lt;/h4&gt;
+&lt;p&gt;With higher density, the cloth sags more than lower density when at full stop, also, I noticed that when they are dropping down, higher the density, slower the speed, and also the deformation in the middle of the cloth is bigger. This is because the density cause the point mass to be heavier/lighter.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/g3rLvHh8Okt9cxR.png&#34; alt=&#34;2-1-2-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/ai2uZwXFcqyNKrY.png&#34; alt=&#34;2-1-2-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/9aOSn3HQV8iNdKJ.png&#34; alt=&#34;2-1-2-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;density&lt;/code&gt; = 100&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;og &lt;code&gt;density&lt;/code&gt;&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;density&lt;/code&gt; = 1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;damping&#34;&gt;Damping&lt;/h3&gt;
+&lt;p&gt;Bigger damping value results in much stable movement when falling down, which indicates that the delta of point masses location doesn&amp;rsquo;t change dramatically. From the picture, very low damping value results in the cloth behaves jumping around actively, whereas higher damping value initially controls the cloth movement and then even the sagging speed is lower.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/sR5v4x3A82d6TND.png&#34; alt=&#34;2-1-3-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/ZAILVijTPWM592k.png&#34; alt=&#34;2-1-3-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;big &lt;code&gt;damping&lt;/code&gt; value&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;super small &lt;code&gt;damping&lt;/code&gt; value&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;scenepinned4json-results&#34;&gt;&lt;code&gt;scene/pinned4.json&lt;/code&gt; results&lt;/h3&gt;
+&lt;p&gt;All default.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/04/AUt2nq1DMR38fQy.png&#34; alt=&#34;2-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;part-3-handling-collisions-with-other-objects&#34;&gt;Part 3: Handling collisions with other objects&lt;/h2&gt;
+&lt;h3 id=&#34;implementation-of-collisions&#34;&gt;Implementation of collisions&lt;/h3&gt;
+&lt;h4 id=&#34;sphere-collisions&#34;&gt;Sphere collisions&lt;/h4&gt;
+&lt;p&gt;I first calculate the distance between the pointmass and origin of the sphere&amp;rsquo;s surface, if it&amp;rsquo;s landing on it then we just return, if not, I compute the correction vector from the tangent (&lt;code&gt;origin + (dir / dist) * radius&lt;/code&gt;) minus last position, scaled down by friction.&lt;/p&gt;
+&lt;h4 id=&#34;plane-collisions&#34;&gt;Plane collisions&lt;/h4&gt;
+&lt;p&gt;The function first computes the signed distances of the point mass&amp;rsquo;s last and current positions from the plane by taking the dot product of the difference between the positions and a reference point on the plane with the plane&amp;rsquo;s normal. If the product of these distances is negative, it indicates that the point mass has crossed the plane. The function then calculates the fraction along the point mass&amp;rsquo;s trajectory where the collision occurs and determines the exact collision point (referred to as &amp;ldquo;tangent&amp;rdquo;) on the plane. Depending on whether the point mass was above or below the plane, it adjusts the collision point by a small offset to avoid numerical issues. Finally, it computes a correction vector that accounts for friction, updating the point mass&amp;rsquo;s position so that it lies on or near the plane after the collision.&lt;/p&gt;
+&lt;h3 id=&#34;scenespherejson-results&#34;&gt;&lt;code&gt;scene/sphere.json&lt;/code&gt; results&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/IbWiJdGH2ukl9tT.png&#34; alt=&#34;3-2-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/tUvQ6sYWhTZxPe7.png&#34; alt=&#34;3-2-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/bn75WBKiOlXAgdv.png&#34; alt=&#34;3-2-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;ks&lt;/code&gt; = 500&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;og &lt;code&gt;ks&lt;/code&gt;(&lt;code&gt;ks&lt;/code&gt; = 5000)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;ks&lt;/code&gt; = 50000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The higher the &lt;code&gt;ks&lt;/code&gt;, the cloth seems more &amp;ldquo;extended&amp;rdquo; and harder to deform, which matches what &lt;code&gt;ks&lt;/code&gt; contributes to the property of the cloth.&lt;/p&gt;
+&lt;h3 id=&#34;cloth-on-plane-result&#34;&gt;Cloth on plane result&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/l6SYxOJ9bV8qHpj.png&#34; alt=&#34;3-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;part-4-handling-self-collisions&#34;&gt;Part 4: Handling self-collisions&lt;/h2&gt;
+&lt;h3 id=&#34;implementation-of-self-coliision&#34;&gt;Implementation of self-coliision&lt;/h3&gt;
+&lt;p&gt;To implement self-collision for the cloth, I used a spatial hashing approach to efficiently detect and resolve collisions between point masses. First, the &lt;code&gt;build_spatial_map&lt;/code&gt; function creates a spatial map by iterating over all point masses and hashing their positions into discrete grid cells using the &lt;code&gt;hash_position&lt;/code&gt; function, which computes a unique float identifier for each 3D box volume based on the cloth dimensions. Then, in the &lt;code&gt;self_collide&lt;/code&gt; function, for a given point mass, I retrieve nearby candidate point masses from the spatial map (i.e., those that share the same hash key). For each candidate (excluding the point mass itself), I calculate the distance between their positions; if it is less than twice the cloth thickness, I compute a corrective displacement vector to push them apart. The average of these correction vectors, scaled by the simulation step size, is then added to the point mass’s position, effectively resolving the self-collision.&lt;/p&gt;
+&lt;h3 id=&#34;self-collision-at-different-time&#34;&gt;Self-collision at different time&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/ZA2kTGuvW74jbE6.png&#34; alt=&#34;4-2-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/1xPNJ9CA5zIUs7u.png&#34; alt=&#34;4-2-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/vaDemBTCKixV1Ib.png&#34; alt=&#34;4-2-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;early stage&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;middle stage&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;near final stage&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;varied-density-and-ks&#34;&gt;Varied &lt;code&gt;density&lt;/code&gt; and &lt;code&gt;ks&lt;/code&gt;&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/mRgIblpESi8ry1w.png&#34; alt=&#34;4-3-1-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/vdAn2seEBlFZoNp.png&#34; alt=&#34;4-3-1-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;og &lt;code&gt;ks&lt;/code&gt;(&lt;code&gt;ks&lt;/code&gt; = 5000)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;ks&lt;/code&gt; = 50000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Smaller &lt;code&gt;ks&lt;/code&gt; makes the cloth &amp;ldquo;softer&amp;rdquo; and there will be more overlapping and creases when cloth falls on itself.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/mRgIblpESi8ry1w.png&#34; alt=&#34;4-3-1-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/Xuk2NDYpP7vEFfs.png&#34; alt=&#34;4-3-2-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;og &lt;code&gt;density&lt;/code&gt;(15)&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;density&lt;/code&gt; = 5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Smaller &lt;code&gt;density&lt;/code&gt; makes the cloth more smooth and &amp;ldquo;flat&amp;rdquo; when it falls on itself. (Because smaller density causes smaller pointmass weight and individual pointmass won&amp;rsquo;t fall into the cloth that easily.)&lt;/p&gt;
+&lt;h2 id=&#34;part-5-shaders&#34;&gt;Part 5: Shaders&lt;/h2&gt;
+&lt;h3 id=&#34;shader-program-vertex--fragment-shaders&#34;&gt;Shader program, vertex &amp;amp; fragment shaders&lt;/h3&gt;
+&lt;p&gt;A shader program is a set of instructions that runs on the GPU to determine how graphics are rendered on the screen. It typically includes different types of shaders, such as vertex and fragment shaders, that work together to produce the final image.&lt;/p&gt;
+&lt;p&gt;The vertex shader is the first stage in the rendering pipeline. It processes each vertex of a 3D model, transforming its position from object space into screen space. It can also compute additional data like normals, texture coordinates, and lighting information per vertex.&lt;/p&gt;
+&lt;p&gt;The fragment shader comes later in the pipeline and operates on each pixel (or fragment) that results from the rasterization of the transformed vertices. It takes the interpolated data produced by the vertex shader and uses it to determine the final color of each pixel by applying textures, lighting models, and material properties. By combining the computations from both shaders, a shader program creates realistic lighting and material effects, making objects appear as if they interact with light in a lifelike manner.&lt;/p&gt;
+&lt;h3 id=&#34;the-blinn-phong-shading-model&#34;&gt;The Blinn-Phong shading model&lt;/h3&gt;
+&lt;p&gt;The Blinn-Phong shading model breaks down the lighting into three main components: ambient light(the constant, background light in a scene that uniformly illuminates all surfaces), diffuse reflection(models how light scatters off a rough surface, depending on the angle between the surface normal and the light direction) and specular reflection.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/PHXxcq3ZALkysQB.png&#34; alt=&#34;5-2-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/by3Ei9OIsZ4LrjP.png&#34; alt=&#34;5-2-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;only ambient&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;only diffuse&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/sQ3AKiOpXZUCu8T.png&#34; alt=&#34;5-2-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/aGrlcjIUQfvknRF.png&#34; alt=&#34;5-2-4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;only specular&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;entire Blinn-Phong&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;texture-mapping-shader&#34;&gt;Texture mapping shader&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/NYV6xZpXhd15RUJ.png&#34; alt=&#34;5-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/vYeS4capTL7PQEt.png&#34; alt=&#34;5-3-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;render result&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;custom texture&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;bump-mapping-and-displacement-mapping&#34;&gt;Bump mapping and displacement mapping&lt;/h3&gt;
+&lt;h4 id=&#34;some-results&#34;&gt;Some results&lt;/h4&gt;
+&lt;p&gt;normal = 2, height = 1&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/MVHK96Gvrfq2IQW.png&#34; alt=&#34;5-4-1-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/6mdcTl8AHZhXONj.png&#34; alt=&#34;5-4-1-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;bump mapping cloth&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;bump mapping sphere&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;normal = 100 and height = 0.02&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/bwCY69HpJRMLkao.png&#34; alt=&#34;5-4-1-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/Y3GfbWqgvJaEFA7.png&#34; alt=&#34;5-4-1-4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;displacement mapping cloth&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;displacement mapping sphere&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;comparison&#34;&gt;Comparison&lt;/h4&gt;
+&lt;p&gt;Bump Mapping:
+Bump mapping simulates surface detail by perturbing the surface normals used in lighting calculations, which creates the illusion of texture without modifying the actual geometry. In the screenshots, the cloth shows subtle wrinkles and folds that enhance its fabric appearance, while the sphere exhibits texture detail (such as bumps or grooves) on its surface. However, since the underlying geometry remains unchanged, the silhouette and shadow edges of both objects are not affected by these details.&lt;/p&gt;
+&lt;p&gt;Displacement Mapping:
+Displacement mapping, on the other hand, alters the actual geometry by moving vertices along the normal direction based on the texture’s intensity values. In the displacement mapping screenshot of the sphere, you can see more pronounced surface details that not only affect the shading but also modify the object&amp;rsquo;s silhouette and the way shadows are cast. This results in a more realistic depiction of rough or uneven surfaces, at the cost of additional computational overhead.&lt;/p&gt;
+&lt;h4 id=&#34;sphere-mesh-coarseness-effect&#34;&gt;Sphere mesh coarseness effect&lt;/h4&gt;
+&lt;p&gt;Above: coarse(&lt;code&gt;-o 16 -a 16&lt;/code&gt;), below: fine(&lt;code&gt;-o 128 -a 128&lt;/code&gt;).&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/q9Kwgi4L1Qr5zav.png&#34; alt=&#34;5-4-3-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/ObvRm31YPCdyKfS.png&#34; alt=&#34;5-4-3-3.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/tWcMwrvkTJjNxGb.png&#34; alt=&#34;5-4-3-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/au9LkxdCGsQYBpf.png&#34; alt=&#34;5-4-3-4.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;bump mapping&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;displacement mapping&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The bump mapping behaves consistant from coarse to fine, and the displacement mapping sphere is more realistic when it&amp;rsquo;s fine compared to coarse.&lt;/p&gt;
+&lt;h3 id=&#34;mirror-shader&#34;&gt;Mirror shader&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/VaIdpc1bUlYE57T.png&#34; alt=&#34;5-5-1.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/06/d2UEImafqR5xOoB.png&#34; alt=&#34;5-5-2.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;mirror shader on cloth&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;mirror shader on sphere&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
       <title>COMPSCI 280 Project2: Flow Matching</title>
       <link>https://alt-js.github.io/post/280pj2/</link>
       <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
@@ -1897,6 +2996,9 @@ The new points generated is the one-step result of all the original points.&lt;/
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj3/&#34;&gt;Project 3: PathTracer&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/184pj4/&#34;&gt;Project 4: ClothSim&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 </description>
