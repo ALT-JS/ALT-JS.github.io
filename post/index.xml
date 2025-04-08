@@ -5,12 +5,252 @@
     <link>https://alt-js.github.io/post/</link>
       <atom:link href="https://alt-js.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 18 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 24 Mar 2025 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png</url>
       <title>Posts</title>
       <link>https://alt-js.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>COMPSCI 280 Project3: Facial Keypoint Detection</title>
+      <link>https://alt-js.github.io/post/280pj3/</link>
+      <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/280pj3/</guid>
+      <description>&lt;p&gt;url: &lt;a href=&#34;https://alt-js.github.io/post/280pj3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://alt-js.github.io/post/280pj3&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;part-1-direct-coordinate-regression&#34;&gt;Part 1: Direct Coordinate Regression&lt;/h2&gt;
+&lt;h3 id=&#34;implementation-details&#34;&gt;Implementation details&lt;/h3&gt;
+&lt;p&gt;I&amp;rsquo;m using SmoothL1Loss for the &lt;code&gt;SimpleNet&lt;/code&gt; training(the weights is from SmoothL1Loss) and learning rate 5e-4. This SimpleNet model is a straightforward convolutional neural network designed for facial keypoint detection. It takes a single-channel 224×224 grayscale image as input and applies a series of four convolutional blocks—each block consisting of convolution, batch normalization, ReLU activation, max pooling, and dropout—to progressively extract and compress features, reducing the image size down to roughly 13×13. The resulting feature map is then flattened and passed through three fully connected layers, with the final layer outputting 136 values corresponding to 68 (x, y) keypoints. The network also uses Xavier initialization for the FC layers to improve convergence during training.&lt;/p&gt;
+&lt;h3 id=&#34;training-and-validation-loss-curves&#34;&gt;Training and validation loss curves&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/K1vQBlsoh52maUi.png&#34; alt=&#34;simplenet_losses.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;visualizations-on-test-images&#34;&gt;Visualizations on test images&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/pGUVMcb8WazNLRO.png&#34; alt=&#34;smoothl1_smoothl1_epoch20lr5e-4.png.jpg.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;pros-and-cons&#34;&gt;Pros and Cons&lt;/h3&gt;
+&lt;p&gt;SimpleNet is easy to design and fast to run, but it doesn&amp;rsquo;t converge well and the result isn&amp;rsquo;t OK to use in real applications because the keypoints aren&amp;rsquo;t real to be actual human faces.&lt;/p&gt;
+&lt;h2 id=&#34;part-2-transfer-learning-for-keypoint-detection&#34;&gt;Part 2: Transfer Learning for Keypoint Detection&lt;/h2&gt;
+&lt;h3 id=&#34;implementation-details-1&#34;&gt;Implementation details&lt;/h3&gt;
+&lt;p&gt;This model is a modified ResNet-18 adapted for facial keypoint detection on grayscale images. It takes a 1-channel image as input by replacing the first convolutional layer with a new one that accepts a single channel, and its weights are initialized by averaging the pretrained RGB weights. The final fully connected layer is replaced with a new linear layer that outputs 136 values corresponding to 68 (x, y) keypoints. Additionally, the model supports an optional parameter to freeze the backbone for transfer learning, ensuring that only the final regression head is trained if desired. I set 10 epoches for the first stage where the pretrained backbone is frozen and only train the new layers, and I finetuned the whole model for another 10 epoches where all the parameters are active. Both stages has a learning rate of 5e-4.&lt;/p&gt;
+&lt;h3 id=&#34;training-and-validation-loss-curves-1&#34;&gt;Training and validation loss curves&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/2LhuxcdXrBVPQ6z.png&#34; alt=&#34;resnet18_losses.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;visualizations-on-test-images-1&#34;&gt;Visualizations on test images&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/lZWFai5UfYvue6X.png&#34; alt=&#34;resnet18lr5e-4result.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;pros-and-cons-1&#34;&gt;Pros and Cons&lt;/h3&gt;
+&lt;p&gt;The Resnet18 yields better performance compared to the previous SimpleNet and thanks to utilizing existing pretrained backbone, it&amp;rsquo;s not too hard to design the network. Although it costs more time compared to the SimpleNet, its results show way less flaws and I would say it&amp;rsquo;s applicable for natural human face keypoint detection.&lt;/p&gt;
+&lt;h2 id=&#34;part-3-heatmap-based-keypoint-detection&#34;&gt;Part 3: Heatmap-based Keypoint Detection&lt;/h2&gt;
+&lt;h3 id=&#34;implementation-details-2&#34;&gt;Implementation details&lt;/h3&gt;
+&lt;p&gt;This UNet model is an encoder-decoder architecture designed for keypoint heatmap prediction, taking a single-channel image and outputting 68 heatmaps. In the encoder (or &amp;ldquo;down&amp;rdquo; part), the network applies several sequential convolutional blocks—each consisting of two convolution layers with batch normalization and ReLU activation—to progressively extract features while preserving spatial information, and uses max pooling to reduce spatial resolution after each block, storing intermediate outputs as skip connections. The bottleneck further processes the compressed representation with a deeper convolutional block that doubles the feature channels, while the decoder (or &amp;ldquo;up&amp;rdquo; part) upsamples the bottleneck output using transposed convolutions and concatenates it with the corresponding skip connections (after resizing if needed), followed by additional convolutional blocks to refine the combined features. Finally, a 1×1 convolution projects the features to the desired number of output channels (68), with each channel representing the predicted heatmap for a facial keypoint.&lt;/p&gt;
+&lt;p&gt;For the keypoint extraction function, it extracts keypoint coordinates from predicted heatmaps by processing a batch of heatmaps with shape [B, K, H, W], where B is the batch size, K is the number of keypoints, and H and W are the heatmap height and width. For each sample in the batch and for each keypoint channel, it flattens the heatmap into a 1D tensor and uses argmax to find the index of the highest activation, which is assumed to correspond to the keypoint location. The index is then converted back into two-dimensional coordinates by computing the row (y-coordinate) as the quotient of the index divided by W and the column (x-coordinate) as the remainder of that division. The coordinates for each keypoint are collected per sample and ultimately returned as a tensor containing all predicted keypoints.&lt;/p&gt;
+&lt;h3 id=&#34;training-and-validation-loss&#34;&gt;Training and validation loss&lt;/h3&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/d79SocqibMyhERX.png&#34; alt=&#34;unet_losses.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;visualizations-on-test-images-2&#34;&gt;Visualizations on test images&lt;/h3&gt;
+&lt;p&gt;Click to zoom in.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/pTgfLisr3oGyCmO.png&#34; alt=&#34;unet9.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/Us8xBlbumpzjeVc.png&#34; alt=&#34;unet19.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/OarnzLF3c5IE41V.png&#34; alt=&#34;unet14.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;https://s2.loli.net/2025/04/08/1yu8ftV53hBjmEG.png&#34; alt=&#34;unet20.png&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;pros-and-cons-2&#34;&gt;Pros and Cons&lt;/h3&gt;
+&lt;p&gt;The UNet result is very satisfying and it converges really fast, you can get decent workable model in 2~3 epoches, and its validation loss is also low. The cons is that UNet in my approach is sensitive to learning rate, in my test 1e-4 yields nice and consistent results.&lt;/p&gt;
+&lt;h3 id=&#34;discussion&#34;&gt;Discussion&lt;/h3&gt;
+&lt;p&gt;I started out to have really random and bad results with the heatmaps and the keypoints extracted from the keypoints. I showed my picture results to one of my friend and he said, &amp;ldquo;Your UNet looks like an edge detector.&amp;rdquo; I thought about it intuitively, the sigma in my heatmap, it was 1 originally. If the heatmap only has sigma=1, the heatmap can only cover a relatively small amount of area in the picture, and the feature it extracts will probably be an edge, that&amp;rsquo;s probably why it looked like an edge detector. So I cranked up the sigma to 2.5(not too big), and the UNet started to behave very nice.&lt;/p&gt;
+&lt;h2 id=&#34;misc&#34;&gt;Misc&lt;/h2&gt;
+&lt;p&gt;Here are three model weights:
+&lt;a href=&#34;https://drive.google.com/file/d/10GPoXDNmRQ9vKUgeF9YZ5Y3g_5lE5i6m/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://drive.google.com/file/d/10GPoXDNmRQ9vKUgeF9YZ5Y3g_5lE5i6m/view?usp=sharing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://drive.google.com/file/d/18SkoUGENJywnrIW2g3LVnK3OxS9jDQdo/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://drive.google.com/file/d/18SkoUGENJywnrIW2g3LVnK3OxS9jDQdo/view?usp=sharing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://drive.google.com/file/d/1IVIEIwCkIZ618gGq4wSG24NfUtl2SNEA/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://drive.google.com/file/d/1IVIEIwCkIZ618gGq4wSG24NfUtl2SNEA/view?usp=sharing&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Here is the &lt;code&gt;.ipynb&lt;/code&gt; file:
+&lt;a href=&#34;https://drive.google.com/file/d/1PMTGhzRGHqDZ11OWpXvznUgYt07QMsHT/view?usp=sharing&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://drive.google.com/file/d/1PMTGhzRGHqDZ11OWpXvznUgYt07QMsHT/view?usp=sharing&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>COMPSCI 184 Project4: ClothSim</title>

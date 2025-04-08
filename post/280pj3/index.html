@@ -282,13 +282,13 @@
 
   
 
-<meta name="description" content="Overview You will train your own flow matching model on MNIST.
-Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Visualization of the noising process Training loss curve Sample results on the test set after the first and the 5-th epoch Sample results on the test set with out-of-distribution noise levels after the model is trained." />
+<meta name="description" content="url: https://alt-js.github.io/post/280pj3
+Part 1: Direct Coordinate Regression Implementation details I&rsquo;m using SmoothL1Loss for the SimpleNet training(the weights is from SmoothL1Loss) and learning rate 5e-4. This SimpleNet model is a straightforward convolutional neural network designed for facial keypoint detection." />
 
 
 
-<link rel="alternate" hreflang="en-us" href="https://alt-js.github.io/post/280pj2/" />
-<link rel="canonical" href="https://alt-js.github.io/post/280pj2/" />
+<link rel="alternate" hreflang="en-us" href="https://alt-js.github.io/post/280pj3/" />
+<link rel="canonical" href="https://alt-js.github.io/post/280pj3/" />
 
 
 
@@ -330,19 +330,19 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="JiashenDu Homepage" />
-<meta property="og:url" content="https://alt-js.github.io/post/280pj2/" />
-<meta property="og:title" content="COMPSCI 280 Project2: Flow Matching | JiashenDu Homepage" />
-<meta property="og:description" content="Overview You will train your own flow matching model on MNIST.
-Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Visualization of the noising process Training loss curve Sample results on the test set after the first and the 5-th epoch Sample results on the test set with out-of-distribution noise levels after the model is trained." /><meta property="og:image" content="https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+<meta property="og:url" content="https://alt-js.github.io/post/280pj3/" />
+<meta property="og:title" content="COMPSCI 280 Project3: Facial Keypoint Detection | JiashenDu Homepage" />
+<meta property="og:description" content="url: https://alt-js.github.io/post/280pj3
+Part 1: Direct Coordinate Regression Implementation details I&rsquo;m using SmoothL1Loss for the SimpleNet training(the weights is from SmoothL1Loss) and learning rate 5e-4. This SimpleNet model is a straightforward convolutional neural network designed for facial keypoint detection." /><meta property="og:image" content="https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
 
   
     <meta
       property="article:published_time"
-      content="2025-03-09T00:00:00&#43;00:00"
+      content="2025-03-24T00:00:00&#43;00:00"
     />
   
   
-    <meta property="article:modified_time" content="2025-03-09T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2025-03-24T00:00:00&#43;00:00">
   
 
 
@@ -368,12 +368,12 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://alt-js.github.io/post/280pj2/"
+    "@id": "https://alt-js.github.io/post/280pj3/"
   },
-  "headline": "COMPSCI 280 Project2: Flow Matching",
+  "headline": "COMPSCI 280 Project3: Facial Keypoint Detection",
   
-  "datePublished": "2025-03-09T00:00:00Z",
-  "dateModified": "2025-03-09T00:00:00Z",
+  "datePublished": "2025-03-24T00:00:00Z",
+  "dateModified": "2025-03-24T00:00:00Z",
   
   "author": {
     "@type": "Person",
@@ -388,7 +388,7 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
       "url": "https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_192x192_fill_lanczos_center_3.png"
     }
   },
-  "description": "Overview You will train your own flow matching model on MNIST.\nPart 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Visualization of the noising process Training loss curve Sample results on the test set after the first and the 5-th epoch Sample results on the test set with out-of-distribution noise levels after the model is trained."
+  "description": "url: https://alt-js.github.io/post/280pj3\nPart 1: Direct Coordinate Regression Implementation details I\u0026rsquo;m using SmoothL1Loss for the SimpleNet training(the weights is from SmoothL1Loss) and learning rate 5e-4. This SimpleNet model is a straightforward convolutional neural network designed for facial keypoint detection."
 }
 </script>
 
@@ -410,7 +410,7 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 
   
-  <title>COMPSCI 280 Project2: Flow Matching | JiashenDu Homepage</title>
+  <title>COMPSCI 280 Project3: Facial Keypoint Detection | JiashenDu Homepage</title>
 
   
   
@@ -430,7 +430,7 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="93339e616d1e686cc6422476ea78c8c0" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="018987f1fd81fbced35be29a357b5a40" >
 
   
   
@@ -807,10 +807,10 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
   
   
 <div class="article-container pt-3">
-  <h1>COMPSCI 280 Project2: Flow Matching</h1>
+  <h1>COMPSCI 280 Project3: Facial Keypoint Detection</h1>
 
   
-  <p class="page-subtitle">an updated version of CS180 Project 5 part B with flow matching instead of DDPM diffusion</p>
+  <p class="page-subtitle">implementation and comparison between different approaches for facial keypoint detection, ranging from direct coordinate regression to heatmap-based detection methods</p>
   
 
   
@@ -828,7 +828,7 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
     
       
     
-    Mar 9, 2025
+    Mar 24, 2025
   </span>
   
 
@@ -837,7 +837,7 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    1 min read
+    5 min read
   </span>
   
 
@@ -865,10 +865,11 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
   <div class="article-container">
 
     <div class="article-style">
-      <h2 id="overview">Overview</h2>
-<p>You will train your own flow matching model on MNIST.</p>
-<h2 id="part-1-training-a-single-step-denoising-unet">Part 1: Training a Single-Step Denoising UNet</h2>
-<h3 id="unconditioned-unet-architecture">Unconditioned UNet architecture</h3>
+      <p>url: <a href="https://alt-js.github.io/post/280pj3" target="_blank" rel="noopener">https://alt-js.github.io/post/280pj3</a></p>
+<h2 id="part-1-direct-coordinate-regression">Part 1: Direct Coordinate Regression</h2>
+<h3 id="implementation-details">Implementation details</h3>
+<p>I&rsquo;m using SmoothL1Loss for the <code>SimpleNet</code> training(the weights is from SmoothL1Loss) and learning rate 5e-4. This SimpleNet model is a straightforward convolutional neural network designed for facial keypoint detection. It takes a single-channel 224×224 grayscale image as input and applies a series of four convolutional blocks—each block consisting of convolution, batch normalization, ReLU activation, max pooling, and dropout—to progressively extract and compress features, reducing the image size down to roughly 13×13. The resulting feature map is then flattened and passed through three fully connected layers, with the final layer outputting 136 values corresponding to 68 (x, y) keypoints. The network also uses Xavier initialization for the FC layers to improve convergence during training.</p>
+<h3 id="training-and-validation-loss-curves">Training and validation loss curves</h3>
 <p>
 
 
@@ -887,31 +888,10 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://cal-cs180.github.io/fa24/hw/proj5/assets/unconditional_arch.png" alt="fig1" loading="lazy" data-zoomable /></div>
-  </div></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://cal-cs180.github.io/fa24/hw/proj5/assets/atomic_ops_new.png" alt="fig2" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/K1vQBlsoh52maUi.png" alt="simplenet_losses.png" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
-<h3 id="visualization-of-the-noising-process">Visualization of the noising process</h3>
+<h3 id="visualizations-on-test-images">Visualizations on test images</h3>
 <p>
 
 
@@ -930,10 +910,15 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/VapRt2jWhLcIC5m.png" alt="fig3.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/pGUVMcb8WazNLRO.png" alt="smoothl1_smoothl1_epoch20lr5e-4.png.jpg.png" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
-<h3 id="training-loss-curve">Training loss curve</h3>
+<h3 id="pros-and-cons">Pros and Cons</h3>
+<p>SimpleNet is easy to design and fast to run, but it doesn&rsquo;t converge well and the result isn&rsquo;t OK to use in real applications because the keypoints aren&rsquo;t real to be actual human faces.</p>
+<h2 id="part-2-transfer-learning-for-keypoint-detection">Part 2: Transfer Learning for Keypoint Detection</h2>
+<h3 id="implementation-details-1">Implementation details</h3>
+<p>This model is a modified ResNet-18 adapted for facial keypoint detection on grayscale images. It takes a 1-channel image as input by replacing the first convolutional layer with a new one that accepts a single channel, and its weights are initialized by averaging the pretrained RGB weights. The final fully connected layer is replaced with a new linear layer that outputs 136 values corresponding to 68 (x, y) keypoints. Additionally, the model supports an optional parameter to freeze the backbone for transfer learning, ensuring that only the final regression head is trained if desired. I set 10 epoches for the first stage where the pretrained backbone is frozen and only train the new layers, and I finetuned the whole model for another 10 epoches where all the parameters are active. Both stages has a learning rate of 5e-4.</p>
+<h3 id="training-and-validation-loss-curves-1">Training and validation loss curves</h3>
 <p>
 
 
@@ -952,10 +937,10 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/Xo6LJGaAh3bKsNF.png" alt="fig4.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/2LhuxcdXrBVPQ6z.png" alt="resnet18_losses.png" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
-<h3 id="sample-results-on-the-test-set-after-the-first-and-the-5-th-epoch">Sample results on the test set after the first and the 5-th epoch</h3>
+<h3 id="visualizations-on-test-images-1">Visualizations on test images</h3>
 <p>
 
 
@@ -974,31 +959,16 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/1JgCnLkd5ZFaTeu.png" alt="fig5.png" loading="lazy" data-zoomable /></div>
-  </div></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/7K12zJM4ox6Icm8.png" alt="fig6.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/lZWFai5UfYvue6X.png" alt="resnet18lr5e-4result.png" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
-<h3 id="sample-results-on-the-test-set-with-out-of-distribution-noise-levels-after-the-model-is-trained">Sample results on the test set with out-of-distribution noise levels after the model is trained.</h3>
+<h3 id="pros-and-cons-1">Pros and Cons</h3>
+<p>The Resnet18 yields better performance compared to the previous SimpleNet and thanks to utilizing existing pretrained backbone, it&rsquo;s not too hard to design the network. Although it costs more time compared to the SimpleNet, its results show way less flaws and I would say it&rsquo;s applicable for natural human face keypoint detection.</p>
+<h2 id="part-3-heatmap-based-keypoint-detection">Part 3: Heatmap-based Keypoint Detection</h2>
+<h3 id="implementation-details-2">Implementation details</h3>
+<p>This UNet model is an encoder-decoder architecture designed for keypoint heatmap prediction, taking a single-channel image and outputting 68 heatmaps. In the encoder (or &ldquo;down&rdquo; part), the network applies several sequential convolutional blocks—each consisting of two convolution layers with batch normalization and ReLU activation—to progressively extract features while preserving spatial information, and uses max pooling to reduce spatial resolution after each block, storing intermediate outputs as skip connections. The bottleneck further processes the compressed representation with a deeper convolutional block that doubles the feature channels, while the decoder (or &ldquo;up&rdquo; part) upsamples the bottleneck output using transposed convolutions and concatenates it with the corresponding skip connections (after resizing if needed), followed by additional convolutional blocks to refine the combined features. Finally, a 1×1 convolution projects the features to the desired number of output channels (68), with each channel representing the predicted heatmap for a facial keypoint.</p>
+<p>For the keypoint extraction function, it extracts keypoint coordinates from predicted heatmaps by processing a batch of heatmaps with shape [B, K, H, W], where B is the batch size, K is the number of keypoints, and H and W are the heatmap height and width. For each sample in the batch and for each keypoint channel, it flattens the heatmap into a 1D tensor and uses argmax to find the index of the highest activation, which is assumed to correspond to the keypoint location. The index is then converted back into two-dimensional coordinates by computing the row (y-coordinate) as the quotient of the index divided by W and the column (x-coordinate) as the remainder of that division. The coordinates for each keypoint are collected per sample and ultimately returned as a tensor containing all predicted keypoints.</p>
+<h3 id="training-and-validation-loss">Training and validation loss</h3>
 <p>
 
 
@@ -1017,11 +987,15 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/13/tzSuKb4QPysqL7A.png" alt="fig7.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/d79SocqibMyhERX.png" alt="unet_losses.png" loading="lazy" data-zoomable /></div>
   </div></figure>
 </p>
-<h3 id="sample-results-on-the-test-set-with-pure-noise">Sample results on the test set with pure noise</h3>
-<p>
+<h3 id="visualizations-on-test-images-2">Visualizations on test images</h3>
+<p>Click to zoom in.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">
 
 
 
@@ -1039,11 +1013,10 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/13/2v94YdzxhlALSi7.png" alt="fig8.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/pTgfLisr3oGyCmO.png" alt="unet9.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</p>
-<h3 id="average-image-of-the-training-set">Average image of the training set</h3>
-<p>
+</th>
+<th style="text-align:center">
 
 
 
@@ -1061,13 +1034,14 @@ Part 1: Training a Single-Step Denoising UNet Unconditioned UNet architecture Vi
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/13/kI5rCa3uQsLbUoR.png" alt="fig9.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/Us8xBlbumpzjeVc.png" alt="unet19.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-
-The average MNIST image is blurry and lacks clear digits, showing general intensity distributions. The denoised results, however, retain distinct shapes, indicating that it is doing denoising.</p>
-<h2 id="part-2-training-a-flow-matching-model">Part 2: Training a Flow Matching Model</h2>
-<h3 id="training-loss-curve-plot-for-the-time-conditioned-unet-over-the-whole-training-process">Training loss curve plot for the time-conditioned UNet over the whole training process</h3>
-<p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">
 
 
 
@@ -1085,11 +1059,10 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/HaQGujkX1vgocIb.png" alt="fig10_tunet.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/OarnzLF3c5IE41V.png" alt="unet14.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</p>
-<h3 id="sampling-results-for-the-time-conditioned-unet-for-5-and-10-epochs">Sampling results for the time-conditioned UNet for 5 and 10 epochs</h3>
-<p>
+</td>
+<td style="text-align:center">
 
 
 
@@ -1107,53 +1080,23 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
 
 <figure  >
   <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/JPRa2lU9YkINCFo.png" alt="tunet_sample.png" loading="lazy" data-zoomable /></div>
+    <div class="w-100" ><img src="https://s2.loli.net/2025/04/08/1yu8ftV53hBjmEG.png" alt="unet20.png" loading="lazy" data-zoomable /></div>
   </div></figure>
-</p>
-<h3 id="training-loss-curve-plot-for-the-class-conditioned-unet-over-the-whole-training-process">Training loss curve plot for the class-conditioned UNet over the whole training process</h3>
-<p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/dxosKPJYICX9Tki.png" alt="fig10_cunet.png" loading="lazy" data-zoomable /></div>
-  </div></figure>
-</p>
-<h3 id="sampling-results-for-the-class-conditioned-unet-for-5-and-10-epochs">Sampling results for the class-conditioned UNet for 5 and 10 epochs</h3>
-<p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<figure  >
-  <div class="d-flex justify-content-center">
-    <div class="w-100" ><img src="https://s2.loli.net/2025/03/14/62mLjKZDs7nkih5.png" alt="cunet_sample.png" loading="lazy" data-zoomable /></div>
-  </div></figure>
-</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pros-and-cons-2">Pros and Cons</h3>
+<p>The UNet result is very satisfying and it converges really fast, you can get decent workable model in 2~3 epoches, and its validation loss is also low. The cons is that UNet in my approach is sensitive to learning rate, in my test 1e-4 yields nice and consistent results.</p>
+<h3 id="discussion">Discussion</h3>
+<p>I started out to have really random and bad results with the heatmaps and the keypoints extracted from the keypoints. I showed my picture results to one of my friend and he said, &ldquo;Your UNet looks like an edge detector.&rdquo; I thought about it intuitively, the sigma in my heatmap, it was 1 originally. If the heatmap only has sigma=1, the heatmap can only cover a relatively small amount of area in the picture, and the feature it extracts will probably be an edge, that&rsquo;s probably why it looked like an edge detector. So I cranked up the sigma to 2.5(not too big), and the UNet started to behave very nice.</p>
+<h2 id="misc">Misc</h2>
+<p>Here are three model weights:
+<a href="https://drive.google.com/file/d/10GPoXDNmRQ9vKUgeF9YZ5Y3g_5lE5i6m/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/10GPoXDNmRQ9vKUgeF9YZ5Y3g_5lE5i6m/view?usp=sharing</a></p>
+<p><a href="https://drive.google.com/file/d/18SkoUGENJywnrIW2g3LVnK3OxS9jDQdo/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/18SkoUGENJywnrIW2g3LVnK3OxS9jDQdo/view?usp=sharing</a></p>
+<p><a href="https://drive.google.com/file/d/1IVIEIwCkIZ618gGq4wSG24NfUtl2SNEA/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/1IVIEIwCkIZ618gGq4wSG24NfUtl2SNEA/view?usp=sharing</a></p>
+<p>Here is the <code>.ipynb</code> file:
+<a href="https://drive.google.com/file/d/1PMTGhzRGHqDZ11OWpXvznUgYt07QMsHT/view?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/file/d/1PMTGhzRGHqDZ11OWpXvznUgYt07QMsHT/view?usp=sharing</a></p>
 
     </div>
 
@@ -1180,7 +1123,7 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;text=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj3%2F&amp;text=COMPSCI&#43;280&#43;Project3%3A&#43;Facial&#43;Keypoint&#43;Detection" target="_blank" rel="noopener" class="share-btn-twitter" aria-label="twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -1197,7 +1140,7 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;t=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj3%2F&amp;t=COMPSCI&#43;280&#43;Project3%3A&#43;Facial&#43;Keypoint&#43;Detection" target="_blank" rel="noopener" class="share-btn-facebook" aria-label="facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -1216,7 +1159,7 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
         
       
       <li>
-        <a href="mailto:?subject=COMPSCI%20280%20Project2%3A%20Flow%20Matching&amp;body=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
+        <a href="mailto:?subject=COMPSCI%20280%20Project3%3A%20Facial%20Keypoint%20Detection&amp;body=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj3%2F" target="_blank" rel="noopener" class="share-btn-email" aria-label="envelope">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -1233,7 +1176,7 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;title=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
+        <a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj3%2F&amp;title=COMPSCI&#43;280&#43;Project3%3A&#43;Facial&#43;Keypoint&#43;Detection" target="_blank" rel="noopener" class="share-btn-linkedin" aria-label="linkedin-in">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -1250,7 +1193,7 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
       
       
       <li>
-        <a href="whatsapp://send?text=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching%20https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
+        <a href="whatsapp://send?text=COMPSCI&#43;280&#43;Project3%3A&#43;Facial&#43;Keypoint&#43;Detection%20https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj3%2F" target="_blank" rel="noopener" class="share-btn-whatsapp" aria-label="whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -1267,7 +1210,7 @@ The average MNIST image is blurry and lacks clear digits, showing general intens
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj2%2F&amp;title=COMPSCI&#43;280&#43;Project2%3A&#43;Flow&#43;Matching" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Falt-js.github.io%2Fpost%2F280pj3%2F&amp;title=COMPSCI&#43;280&#43;Project3%3A&#43;Facial&#43;Keypoint&#43;Detection" target="_blank" rel="noopener" class="share-btn-weibo" aria-label="weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
