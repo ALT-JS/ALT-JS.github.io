@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cv | JiashenDu Homepage</title>
+    <link>https://alt-js.github.io/tag/cv/</link>
+      <atom:link href="https://alt-js.github.io/tag/cv/index.xml" rel="self" type="application/rss+xml" />
+    <description>cv</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 01 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://alt-js.github.io/media/icon_hu49328279b356d807a3fbed97c60db0cd_36689_512x512_fill_lanczos_center_3.png</url>
+      <title>cv</title>
+      <link>https://alt-js.github.io/tag/cv/</link>
+    </image>
+    
+    <item>
+      <title>Graduate Computer Vision</title>
+      <link>https://alt-js.github.io/post/compsci280/</link>
+      <pubDate>Sat, 01 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://alt-js.github.io/post/compsci280/</guid>
+      <description>&lt;h2 id=&#34;cs-c280-spring-2025&#34;&gt;CS C280 Spring 2025&lt;/h2&gt;
+&lt;h2 id=&#34;contents&#34;&gt;Contents&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/280pj2/&#34;&gt;COMPSCI 280 Project2: Flow Matching&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://alt-js.github.io/post/280pj3/&#34;&gt;COMPSCI 280 Project3: Facial Keypoint Detection&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&#34;https://jingfeng0705.github.io/DREAMoR2/dreamor.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;COMPSCI 280 Final Project: DREAMoR&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
